@@ -6,7 +6,7 @@ Microsoft Foundry Local ile tamamen offline çalışan, RAG (Retrieval-Augmented
 
 ## Durum
 
-🚧 Geliştirme aşamasında — Faz 0.1 (proje iskeleti) tamamlandı.
+✅ MVP tamamlandı (Faz 1.6) — çalışan, offline, local bir RAG chatbot. Geliştirme devam ediyor, detaylar için [PROJECT_PLAN.md](./PROJECT_PLAN.md).
 
 ## Mimari
 
@@ -20,7 +20,7 @@ src/rag_engine/
 ├── llm/           # LLM sağlayıcı arayüzü + implementasyonlar
 ├── retrieval/     # Retrieval stratejileri (saf, hybrid, reranked)
 ├── pipeline/      # Yukarıdakileri birleştiren orkestrasyon katmanı
-└── interfaces/    # Dışa açılan kapılar: CLI, (ileride) API
+└── interfaces/    # Paylaşılan veri tipleri (ör. Chunk) -- paketler arası ortak sözleşme
 ```
 
 ## Kurulum
@@ -38,4 +38,18 @@ pip install -r requirements.txt
 
 ## Kullanım
 
-_(Faz 1.6'da eklenecek)_
+```powershell
+# Foundry Local sunucusunun calistigindan ve modellerin yuklu oldugundan emin ol
+foundry server start
+foundry model load phi-3.5-mini
+foundry model load qwen3-embedding-0.6b
+
+# Bilgi tabanini olustur (ilk kurulumda bir kez)
+.venv\Scripts\python.exe scripts\collect_sources.py
+.venv\Scripts\python.exe scripts\build_vector_db.py
+
+# Asistani baslat
+.venv\Scripts\python.exe main.py
+```
+
+Terminalde açılan `Soru:` istemine sorunu yaz, çıkmak için `exit` yaz.

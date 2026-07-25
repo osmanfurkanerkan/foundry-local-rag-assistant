@@ -440,7 +440,7 @@ Kullanıcıya Cevap (+ kaynak gösterimi)
 - [x] Faz 1.3 — Embedding Üretimi ve Vektör DB'ye Yazma
 - [x] Faz 1.4 — Retrieval Fonksiyonu
 - [x] Faz 1.5 — Prompt Şablonu ve Generate
-- [ ] Faz 1.6 — CLI Arayüzü (MVP)
+- [x] Faz 1.6 — CLI Arayüzü (MVP)
 - [ ] Faz 2.1 — Hybrid Search
 - [ ] Faz 2.2 — Reranking
 - [ ] Faz 2.3 — Akıllı Chunking
