@@ -9,3 +9,6 @@ numpy
 requests
 beautifulsoup4
 markdownify
+
+# Faz 1.3: embedding uretimi ve vektor veritabani
+chromadb
