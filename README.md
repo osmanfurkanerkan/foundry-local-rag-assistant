@@ -25,7 +25,16 @@ src/rag_engine/
 
 ## Kurulum
 
-_(Faz 0.2'de eklenecek)_
+```powershell
+# Sanal ortami olustur (bir kez)
+python -m venv .venv
+
+# Sanal ortami aktif et
+.venv\Scripts\Activate.ps1
+
+# Bagimliliklari kur
+pip install -r requirements.txt
+```
 
 ## Kullanım
 
