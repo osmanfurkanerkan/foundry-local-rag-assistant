@@ -21,6 +21,7 @@ models/
 
 # Vektor DB / veri
 chroma_db/
+chroma_db_bench/
 *.sqlite3
 
 # IDE

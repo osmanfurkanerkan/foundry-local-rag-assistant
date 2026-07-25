@@ -205,6 +205,7 @@ Kullanıcıya Cevap (+ kaynak gösterimi)
   - Sonuçları basit bir tabloya/log dosyasına yaz
 - **Teknoloji:** Python, basit loglama
 - **Çıktı:** Hangi konfigürasyonun en iyi sonucu verdiğine dair kısa bir bulgu notu
+- **Not:** `scripts/benchmark_chunk_topk.py` ile 9 soruluk elle etiketlenmiş bir eval seti (soru → beklenen kaynak doküman) üzerinden, 4 chunk_size/top-k konfigürasyonunda saf embedding retrieval hit rate'i ölçüldü. **Sonuç: tüm konfigürasyonlarda hit rate aynı (%89, 8/9)** — chunk boyutunu (800/1500/2500) veya k'yı (3/5) değiştirmenin bu küçük test setinde ölçülebilir bir etkisi olmadı. Sebep araştırıldı: sürekli kaçırılan tek soru ("Foundry Local'i nasıl kurar ve çalıştırırım?") `get-started` yerine hep `what-is-foundry-local`/`foundry-local-architecture`'ı buluyor — bu bir chunk boyutu sorunu değil, bu üç dokümanın konu olarak birbirine çok yakın olması (embedding uzayında ayrışmalarının zor olması). Bulgu: bu ölçekte (10 doküman, 137 chunk) chunk_size/k ayarı retrieval kalitesinin darboğazı değil; asıl kazanç zaten yapılmış olan hybrid search + reranking'den (Faz 2.1/2.2) geliyor. Daha büyük/çeşitli bir bilgi tabanında bu deneyin tekrarlanması farklı sonuç verebilir.
 
 ---
 
@@ -447,7 +448,7 @@ Kullanıcıya Cevap (+ kaynak gösterimi)
 - [x] Faz 2.1 — Hybrid Search
 - [x] Faz 2.2 — Reranking
 - [x] Faz 2.3 — Akıllı Chunking
-- [ ] Faz 2.4 — Mini Benchmark
+- [x] Faz 2.4 — Mini Benchmark
 - [ ] Faz 3.1 — Multi-turn Hafıza
 - [ ] Faz 3.2 — Kaynak Gösterme
 - [ ] Faz 3.3 — Streaming Yanıt
