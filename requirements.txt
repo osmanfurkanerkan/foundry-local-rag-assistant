@@ -4,3 +4,8 @@ openai==2.48.0
 
 # Faz 0.4: embedding/cosine similarity kesfi
 numpy
+
+# Faz 1.1: Microsoft Learn kaynak dokumanlarini toplama
+requests
+beautifulsoup4
+markdownify
