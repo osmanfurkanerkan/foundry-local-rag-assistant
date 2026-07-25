@@ -13,8 +13,10 @@ from rag_engine.embeddings.foundry_local_embedder import FoundryLocalEmbedder
 from rag_engine.llm.foundry_local_provider import FoundryLocalProvider
 from rag_engine.pipeline.rag_pipeline import RagPipeline
 from rag_engine.retrieval.bm25_retriever import BM25Retriever
+from rag_engine.retrieval.cross_encoder_reranker import CrossEncoderReranker
 from rag_engine.retrieval.embedding_retriever import EmbeddingRetriever
 from rag_engine.retrieval.hybrid_retriever import HybridRetriever
+from rag_engine.retrieval.reranking_retriever import RerankingRetriever
 from rag_engine.vectorstore.chroma_vectorstore import ChromaVectorStore
 
 TEST_QUESTIONS = [
@@ -27,7 +29,8 @@ if __name__ == "__main__":
     embedding_retriever = EmbeddingRetriever(embedder=FoundryLocalEmbedder(), vectorstore=vectorstore)
     bm25_retriever = BM25Retriever(chunks=vectorstore.get_all_chunks())
     hybrid_retriever = HybridRetriever(strategies=[embedding_retriever, bm25_retriever])
-    pipeline = RagPipeline(retriever=hybrid_retriever, llm=FoundryLocalProvider())
+    reranking_retriever = RerankingRetriever(base_strategy=hybrid_retriever, reranker=CrossEncoderReranker())
+    pipeline = RagPipeline(retriever=reranking_retriever, llm=FoundryLocalProvider())
 
     for question in TEST_QUESTIONS:
         print(f"\n{'=' * 70}")

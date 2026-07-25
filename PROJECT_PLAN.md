@@ -183,6 +183,7 @@ Kullanıcıya Cevap (+ kaynak gösterimi)
   - Top-10 sonucu al, rerank ile top-3'e indir
 - **Teknoloji:** `sentence-transformers`
 - **Çıktı:** Rerank öncesi/sonrası sonuçları karşılaştıran küçük bir test scripti
+- **Not:** `scripts/test_retrieval.py`'ye üçüncü bir karşılaştırma sütunu eklendi (embedding / hybrid / hybrid+rerank). Sonuç karışık: bazı sorularda rerank belirgin şekilde iyileştirdi (örn. "cosine similarity" sorusunda tanımı içeren chunk'ı 1. sıraya taşıdı), bazılarında ise daha az alakalı bir chunk'ı öne çıkardı (CLI sorusu). Olası neden: `cross-encoder/ms-marco-MiniLM-L-6-v2` İngilizce MS MARCO verisiyle eğitilmiş; Türkçe soru + İngilizce doküman kombinasyonunda Faz 1.5'te LLM'de görülen cross-lingual zorlukla benzer bir sinyal olabilir. İleride İngilizce sorularla da test edilip karşılaştırılabilir.
 
 ### Faz 2.3 — Akıllı (Semantic) Chunking
 
@@ -443,7 +444,7 @@ Kullanıcıya Cevap (+ kaynak gösterimi)
 - [x] Faz 1.5 — Prompt Şablonu ve Generate
 - [x] Faz 1.6 — CLI Arayüzü (MVP)
 - [x] Faz 2.1 — Hybrid Search
-- [ ] Faz 2.2 — Reranking
+- [x] Faz 2.2 — Reranking
 - [ ] Faz 2.3 — Akıllı Chunking
 - [ ] Faz 2.4 — Mini Benchmark
 - [ ] Faz 3.1 — Multi-turn Hafıza

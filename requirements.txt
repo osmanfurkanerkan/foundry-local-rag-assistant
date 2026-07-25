@@ -15,3 +15,6 @@ chromadb
 
 # Faz 2.1: BM25 anahtar kelime arama (hybrid search icin)
 rank_bm25
+
+# Faz 2.2: cross-encoder reranking
+sentence-transformers
