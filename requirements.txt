@@ -18,3 +18,6 @@ rank_bm25
 
 # Faz 2.2: cross-encoder reranking
 sentence-transformers
+
+# Faz 2.3: baslik/paragraf bazli akilli chunking
+langchain-text-splitters

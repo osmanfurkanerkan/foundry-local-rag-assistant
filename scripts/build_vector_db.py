@@ -10,15 +10,15 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
 
 from rag_engine.embeddings.foundry_local_embedder import FoundryLocalEmbedder
 from rag_engine.ingestion.cleaner import clean_text
-from rag_engine.ingestion.fixed_size_chunker import FixedSizeChunker
 from rag_engine.ingestion.loader import load_raw_documents
+from rag_engine.ingestion.markdown_chunker import MarkdownChunker
 from rag_engine.vectorstore.chroma_vectorstore import ChromaVectorStore
 
 RAW_DIR = Path(__file__).resolve().parent.parent / "data" / "raw"
 
 if __name__ == "__main__":
     documents = load_raw_documents(RAW_DIR)
-    chunker = FixedSizeChunker(chunk_size=300, overlap=50)
+    chunker = MarkdownChunker(chunk_size=1500, overlap=200)
 
     all_chunks = []
     for source, raw_text in documents:

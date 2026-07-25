@@ -194,6 +194,7 @@ Kullanıcıya Cevap (+ kaynak gösterimi)
   - Eski (sabit boyut) ve yeni chunking sonuçlarını karşılaştır
 - **Teknoloji:** `langchain-text-splitters` (semantic/markdown splitter)
 - **Çıktı:** Güncellenmiş, daha kaliteli chunk seti
+- **Not:** `scripts/compare_chunking.py` ile eski (`FixedSizeChunker`, kelime bazlı) ve yeni (`MarkdownChunker`, başlık+paragraf bazlı) karşılaştırıldı: 55 chunk → 137 chunk. Artış beklenen bir sonuç -- markdown dokümanlarındaki her `###` alt-başlık artık kendi chunk'ı oluyor (örn. `reference-cli` 9→23, `get-started` 8→27), yani her chunk daha küçük ama daha net bir konu birimini temsil ediyor. Bilgi tabanı bu chunker ile yeniden inşa edildi (`chroma_db` silinip `build_vector_db.py` tekrar çalıştırıldı); uçtan uca pipeline testi sorunsuz, hatta daha zengin detaylı cevaplar üretti.
 
 ### Faz 2.4 — Mini Benchmark: Chunk Boyutu ve Top-K Deneyleri
 
@@ -445,7 +446,7 @@ Kullanıcıya Cevap (+ kaynak gösterimi)
 - [x] Faz 1.6 — CLI Arayüzü (MVP)
 - [x] Faz 2.1 — Hybrid Search
 - [x] Faz 2.2 — Reranking
-- [ ] Faz 2.3 — Akıllı Chunking
+- [x] Faz 2.3 — Akıllı Chunking
 - [ ] Faz 2.4 — Mini Benchmark
 - [ ] Faz 3.1 — Multi-turn Hafıza
 - [ ] Faz 3.2 — Kaynak Gösterme
