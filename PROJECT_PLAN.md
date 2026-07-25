@@ -435,7 +435,7 @@ Kullanıcıya Cevap (+ kaynak gösterimi)
 - [x] Faz 0.3 — Foundry Local Kurulumu
 - [x] Faz 0.4 — Embedding Kavramını Elle Keşfetme
 - [x] Faz 1.1 — Kaynak Dokümanları Toplama
-- [ ] Faz 1.2 — Doküman Temizleme ve Chunking
+- [x] Faz 1.2 — Doküman Temizleme ve Chunking
 - [ ] Faz 1.3 — Embedding Üretimi ve Vektör DB'ye Yazma
 - [ ] Faz 1.4 — Retrieval Fonksiyonu
 - [ ] Faz 1.5 — Prompt Şablonu ve Generate
