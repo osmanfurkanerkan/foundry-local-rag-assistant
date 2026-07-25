@@ -20,3 +20,20 @@ class ChromaVectorStore(VectorStore):
 
     def count(self) -> int:
         return self._collection.count()
+
+    def query(self, query_embedding: list[float], k: int) -> list[Chunk]:
+        result = self._collection.query(query_embeddings=[query_embedding], n_results=k)
+
+        ids = result["ids"][0]
+        documents = result["documents"][0]
+        metadatas = result["metadatas"][0]
+
+        return [
+            Chunk(
+                id=chunk_id,
+                source=metadata["source"],
+                chunk_index=metadata["chunk_index"],
+                text=document,
+            )
+            for chunk_id, document, metadata in zip(ids, documents, metadatas)
+        ]

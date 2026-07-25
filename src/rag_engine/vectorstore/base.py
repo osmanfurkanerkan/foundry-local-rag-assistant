@@ -19,3 +19,8 @@ class VectorStore(ABC):
     def count(self) -> int:
         """Veritabaninda kayitli toplam chunk sayisini dondurur."""
         raise NotImplementedError
+
+    @abstractmethod
+    def query(self, query_embedding: list[float], k: int) -> list[Chunk]:
+        """Verilen embedding'e en yakin k chunk'i, benzerlige gore siralanmis dondurur."""
+        raise NotImplementedError
