@@ -1,15 +1,18 @@
-"""Faz 1.4: get_top_chunks() sonuclarinin gercekten alakali olup olmadigini
-elle kontrol etmek icin birkac ornek soru calistirir.
+"""Faz 2.1: Saf embedding retrieval ile hybrid (BM25 + embedding) retrieval'i
+yan yana karsilastirir.
 
 Kullanim: .venv/Scripts/python.exe scripts/test_retrieval.py
 """
 import sys
 from pathlib import Path
 
+sys.stdout.reconfigure(encoding="utf-8")
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
 
 from rag_engine.embeddings.foundry_local_embedder import FoundryLocalEmbedder
-from rag_engine.retrieval.retriever import Retriever
+from rag_engine.retrieval.bm25_retriever import BM25Retriever
+from rag_engine.retrieval.embedding_retriever import EmbeddingRetriever
+from rag_engine.retrieval.hybrid_retriever import HybridRetriever
 from rag_engine.vectorstore.chroma_vectorstore import ChromaVectorStore
 
 TEST_QUERIES = [
@@ -19,14 +22,24 @@ TEST_QUERIES = [
     "Foundry Local CLI ile bir modeli nasil yuklerim?",
 ]
 
+
+def print_results(label: str, chunks) -> None:
+    print(f"\n  -- {label} --")
+    for rank, chunk in enumerate(chunks, start=1):
+        print(f"  [{rank}] source={chunk.source} (chunk #{chunk.chunk_index})")
+        print(f"      {chunk.text[:150]}...")
+
+
 if __name__ == "__main__":
-    retriever = Retriever(embedder=FoundryLocalEmbedder(), vectorstore=ChromaVectorStore())
+    vectorstore = ChromaVectorStore()
+    embedding_retriever = EmbeddingRetriever(embedder=FoundryLocalEmbedder(), vectorstore=vectorstore)
+    bm25_retriever = BM25Retriever(chunks=vectorstore.get_all_chunks())
+    hybrid_retriever = HybridRetriever(strategies=[embedding_retriever, bm25_retriever])
 
     for query in TEST_QUERIES:
         print(f"\n{'=' * 70}")
         print(f"SORU: {query}")
         print("=" * 70)
 
-        for rank, chunk in enumerate(retriever.get_top_chunks(query, k=3), start=1):
-            print(f"\n  [{rank}] source={chunk.source} (chunk #{chunk.chunk_index})")
-            print(f"      {chunk.text[:200]}...")
+        print_results("Sadece Embedding", embedding_retriever.get_top_chunks(query, k=3))
+        print_results("Hybrid (BM25 + Embedding, RRF)", hybrid_retriever.get_top_chunks(query, k=3))

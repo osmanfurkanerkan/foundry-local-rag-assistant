@@ -1,10 +1,11 @@
 from rag_engine.embeddings.base import EmbeddingProvider
 from rag_engine.interfaces.models import Chunk
+from rag_engine.retrieval.base import RetrievalStrategy
 from rag_engine.vectorstore.base import VectorStore
 
 
-class Retriever:
-    """Bir soru icin en alakali chunk'lari getirir.
+class EmbeddingRetriever(RetrievalStrategy):
+    """Sorguyu embedding'e cevirip vektor benzerligine gore en alakali chunk'lari getirir.
 
     Dependency Inversion: somut FoundryLocalEmbedder / ChromaVectorStore'a
     degil, EmbeddingProvider / VectorStore soyut arayuzlerine bagli.

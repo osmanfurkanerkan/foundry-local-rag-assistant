@@ -37,3 +37,20 @@ class ChromaVectorStore(VectorStore):
             )
             for chunk_id, document, metadata in zip(ids, documents, metadatas)
         ]
+
+    def get_all_chunks(self) -> list[Chunk]:
+        result = self._collection.get()
+
+        ids = result["ids"]
+        documents = result["documents"]
+        metadatas = result["metadatas"]
+
+        return [
+            Chunk(
+                id=chunk_id,
+                source=metadata["source"],
+                chunk_index=metadata["chunk_index"],
+                text=document,
+            )
+            for chunk_id, document, metadata in zip(ids, documents, metadatas)
+        ]

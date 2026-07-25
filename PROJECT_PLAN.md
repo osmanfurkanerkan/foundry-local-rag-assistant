@@ -172,6 +172,7 @@ Kullanıcıya Cevap (+ kaynak gösterimi)
   - BM25 ve embedding sonuçlarını birleştiren bir skorlama (örn. reciprocal rank fusion) yaz
 - **Teknoloji:** `rank_bm25`
 - **Çıktı:** Hybrid retrieval fonksiyonu, önceki saf embedding sonuçlarıyla karşılaştırma
+- **Not:** `scripts/test_retrieval.py` ile 4 örnek soruda saf embedding vs hybrid (RRF) karşılaştırıldı. En net fark: "Foundry Local CLI ile bir modeli nasıl yüklerim?" sorusunda saf embedding genel sayfaları (`what-is-foundry-local`, `foundry-local-architecture`) öne çıkarırken, hybrid arama BM25'in "CLI" kelime eşleşmesi sayesinde doğrudan `reference-cli` sayfasını 1. sıraya taşıdı — embedding'in kaçırdığı tam terim eşleşmesini BM25'in tamamladığının somut kanıtı.
 
 ### Faz 2.2 — Reranking (Cross-Encoder)
 
@@ -441,7 +442,7 @@ Kullanıcıya Cevap (+ kaynak gösterimi)
 - [x] Faz 1.4 — Retrieval Fonksiyonu
 - [x] Faz 1.5 — Prompt Şablonu ve Generate
 - [x] Faz 1.6 — CLI Arayüzü (MVP)
-- [ ] Faz 2.1 — Hybrid Search
+- [x] Faz 2.1 — Hybrid Search
 - [ ] Faz 2.2 — Reranking
 - [ ] Faz 2.3 — Akıllı Chunking
 - [ ] Faz 2.4 — Mini Benchmark

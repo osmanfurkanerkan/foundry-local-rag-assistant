@@ -24,3 +24,8 @@ class VectorStore(ABC):
     def query(self, query_embedding: list[float], k: int) -> list[Chunk]:
         """Verilen embedding'e en yakin k chunk'i, benzerlige gore siralanmis dondurur."""
         raise NotImplementedError
+
+    @abstractmethod
+    def get_all_chunks(self) -> list[Chunk]:
+        """Veritabanindaki tum chunk'lari dondurur (ornegin BM25 indexi kurmak icin)."""
+        raise NotImplementedError

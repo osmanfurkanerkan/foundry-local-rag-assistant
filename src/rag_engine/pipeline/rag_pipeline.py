@@ -1,16 +1,17 @@
 from rag_engine.llm.base import LLMProvider
 from rag_engine.pipeline.prompt_builder import build_prompt
-from rag_engine.retrieval.retriever import Retriever
+from rag_engine.retrieval.base import RetrievalStrategy
 
 
 class RagPipeline:
     """Retrieval + prompt olusturma + generate adimlarini birlestiren uctan uca RAG akisi.
 
-    Dependency Inversion: Retriever ve LLMProvider soyut arayuzlerine bagli,
-    hangi embedding modeli / vektor DB / LLM kullanildigini bilmez.
+    Dependency Inversion: RetrievalStrategy ve LLMProvider soyut arayuzlerine
+    bagli, hangi retrieval yontemi / embedding modeli / vektor DB / LLM
+    kullanildigini bilmez.
     """
 
-    def __init__(self, retriever: Retriever, llm: LLMProvider):
+    def __init__(self, retriever: RetrievalStrategy, llm: LLMProvider):
         self._retriever = retriever
         self._llm = llm
 

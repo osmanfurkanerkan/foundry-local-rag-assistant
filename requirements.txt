@@ -12,3 +12,6 @@ markdownify
 
 # Faz 1.3: embedding uretimi ve vektor veritabani
 chromadb
+
+# Faz 2.1: BM25 anahtar kelime arama (hybrid search icin)
+rank_bm25
