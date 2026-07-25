@@ -147,6 +147,7 @@ Kullanıcıya Cevap (+ kaynak gösterimi)
   - `answer_query(question)` fonksiyonu: retrieval + prompt oluşturma + Foundry Local chat çağrısı
 - **Teknoloji:** Foundry Local chat completion API
 - **Çıktı:** Uçtan uca çalışan, bir soruya bağlamlı cevap veren fonksiyon
+- **Not (model kısıtı):** `phi-3.5-mini`, Türkçe soru metnini ayrıştırırken tutarsız/hatalı davranıyor (bazen tamamen anlamsız çıktı, bazen alakalı bağlamı görmezden gelip "bulamadım" diyor). İngilizce soru + İngilizce cevapta tamamen güvenilir. Bu yüzden sistem promptu "her zaman İngilizce cevap ver" şeklinde sabitlendi; asistanın birincil çalışma dili İngilizce. İleride (Faz 2+) daha güçlü/çok dilli bir model denenebilir.
 
 ### Faz 1.6 — CLI Arayüzü ve İlk Uçtan Uca Test (MVP Milestone 🎉)
 
@@ -438,7 +439,7 @@ Kullanıcıya Cevap (+ kaynak gösterimi)
 - [x] Faz 1.2 — Doküman Temizleme ve Chunking
 - [x] Faz 1.3 — Embedding Üretimi ve Vektör DB'ye Yazma
 - [x] Faz 1.4 — Retrieval Fonksiyonu
-- [ ] Faz 1.5 — Prompt Şablonu ve Generate
+- [x] Faz 1.5 — Prompt Şablonu ve Generate
 - [ ] Faz 1.6 — CLI Arayüzü (MVP)
 - [ ] Faz 2.1 — Hybrid Search
 - [ ] Faz 2.2 — Reranking
