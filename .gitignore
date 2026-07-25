@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+env/
+*.egg-info/
+dist/
+build/
+
+# Ortam degiskenleri / gizli bilgiler
+.env
+*.local
+
+# Foundry Local / model cache
+.foundry/
+models/
+*.gguf
+*.onnx
+
+# Vektor DB / veri
+chroma_db/
+*.sqlite3
+
+# IDE
+.vscode/
+.idea/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Test / coverage
+.pytest_cache/
+.coverage
+htmlcov/
