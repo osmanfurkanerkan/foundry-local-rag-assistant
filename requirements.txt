@@ -1,3 +1,6 @@
 # Faz 0.3: Foundry Local ile yerel LLM/embedding erisimi
 foundry-local-sdk==1.2.3
 openai==2.48.0
+
+# Faz 0.4: embedding/cosine similarity kesfi
+numpy

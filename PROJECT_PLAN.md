@@ -433,7 +433,7 @@ Kullanıcıya Cevap (+ kaynak gösterimi)
 - [x] Faz 0.1 — Proje İskeleti ve Git
 - [x] Faz 0.2 — Python Ortamı
 - [x] Faz 0.3 — Foundry Local Kurulumu
-- [ ] Faz 0.4 — Embedding Kavramını Elle Keşfetme
+- [x] Faz 0.4 — Embedding Kavramını Elle Keşfetme
 - [ ] Faz 1.1 — Kaynak Dokümanları Toplama
 - [ ] Faz 1.2 — Doküman Temizleme ve Chunking
 - [ ] Faz 1.3 — Embedding Üretimi ve Vektör DB'ye Yazma
