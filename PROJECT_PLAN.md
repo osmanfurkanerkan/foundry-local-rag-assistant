@@ -306,6 +306,7 @@ Kullanıcıya Cevap (+ kaynak gösterimi)
   - Her soru için "beklenen davranış" not et
 - **Teknoloji:** Basit bir JSON/CSV dosyası
 - **Çıktı:** `data/eval/test_questions.json`
+- **Not:** 20 soru hazırlandı: `data/raw/`'daki 10 kaynak dokümanın her birinden 1-2 tane olmak üzere 14 cevaplanabilir soru (her biri `expected_source` ile etiketli) + 6 kasıtlı olarak bilgi tabanıyla alakasız soru (`expected_behavior: "unanswerable"`, örn. "What is the capital of France?", "How much does a Tesla Model 3 cost?"). Bazı sorular bilinçli olarak önceki fazlarda bulunan zayıf noktaları (Faz 2.4'ün get-started/what-is-foundry-local karışması, Faz 2.1'in CLI sorusu) tekrar test edecek şekilde seçildi.
 
 ### Faz 5.2 — RAGAS ile Otomatik Metrikler
 
@@ -463,7 +464,7 @@ Kullanıcıya Cevap (+ kaynak gösterimi)
 - [x] Faz 4.2 — Query Rewriting
 - [x] Faz 4.3 — Corrective RAG
 - [ ] Faz 4.4 — Multi-Corpus Router (opsiyonel, ertelendi)
-- [ ] Faz 5.1 — Test Soru Seti
+- [x] Faz 5.1 — Test Soru Seti
 - [ ] Faz 5.2 — RAGAS Metrikleri
 - [ ] Faz 5.3 — Regresyon Testleri
 - [ ] Faz 6.1 — FastAPI Backend

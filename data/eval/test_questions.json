@@ -1,0 +1,142 @@
+[
+  {
+    "id": 1,
+    "question": "What is Foundry Local?",
+    "expected_behavior": "answerable",
+    "expected_source": "what-is-foundry-local",
+    "notes": "Temel tanim sorusu, dogrudan sayfa basligindan cevaplanabilir."
+  },
+  {
+    "id": 2,
+    "question": "Does Foundry Local send any data to Microsoft?",
+    "expected_behavior": "answerable",
+    "expected_source": "what-is-foundry-local",
+    "notes": "FAQ bolumunde acikca cevaplanmis (model indirme/diagnostik disinda hayir)."
+  },
+  {
+    "id": 3,
+    "question": "How do I install and run Foundry Local for the first time?",
+    "expected_behavior": "answerable",
+    "expected_source": "get-started",
+    "notes": "Faz 2.4 benchmarkinda bu tarz sorularin get-started yerine komsu sayfalarla karisabildigi gorulmustu -- ilginc bir kontrol noktasi."
+  },
+  {
+    "id": 4,
+    "question": "What are the prerequisites for getting started with Foundry Local?",
+    "expected_behavior": "answerable",
+    "expected_source": "get-started",
+    "notes": null
+  },
+  {
+    "id": 5,
+    "question": "How does Foundry Local's architecture work internally?",
+    "expected_behavior": "answerable",
+    "expected_source": "foundry-local-architecture",
+    "notes": "Faz 3.1 testinde bu soru bir takip sorusu olarak da denenmisti."
+  },
+  {
+    "id": 6,
+    "question": "What CLI commands does Foundry Local provide?",
+    "expected_behavior": "answerable",
+    "expected_source": "reference-cli",
+    "notes": "Faz 2.1'de hybrid search'un pure embedding'e karsi net fark yarattigi soru tipi."
+  },
+  {
+    "id": 7,
+    "question": "How do I load a model using the Foundry Local CLI?",
+    "expected_behavior": "answerable",
+    "expected_source": "reference-cli",
+    "notes": null
+  },
+  {
+    "id": 8,
+    "question": "What is Retrieval-Augmented Generation (RAG)?",
+    "expected_behavior": "answerable",
+    "expected_source": "retrieval-augmented-generation",
+    "notes": "retrieval-augmented-generation-overview ile icerik ortustugu icin o kaynak da kabul edilebilir."
+  },
+  {
+    "id": 9,
+    "question": "What are the steps involved in a RAG pipeline?",
+    "expected_behavior": "answerable",
+    "expected_source": "retrieval-augmented-generation",
+    "notes": null
+  },
+  {
+    "id": 10,
+    "question": "What should I consider when designing and evaluating a RAG solution?",
+    "expected_behavior": "answerable",
+    "expected_source": "rag-solution-design-and-evaluation-guide",
+    "notes": null
+  },
+  {
+    "id": 11,
+    "question": "What is an embedding in the context of machine learning?",
+    "expected_behavior": "answerable",
+    "expected_source": "understand-embeddings",
+    "notes": null
+  },
+  {
+    "id": 12,
+    "question": "How is cosine similarity used with embeddings?",
+    "expected_behavior": "answerable",
+    "expected_source": "understand-embeddings",
+    "notes": "Faz 2.2 rerank testinde bu soruda cross-encoder'in dogru chunk'i 1. siraya tasidigi gorulmustu."
+  },
+  {
+    "id": 13,
+    "question": "How do I generate embeddings using Azure OpenAI?",
+    "expected_behavior": "answerable",
+    "expected_source": "embeddings",
+    "notes": null
+  },
+  {
+    "id": 14,
+    "question": "How can I generate embeddings for vector search?",
+    "expected_behavior": "answerable",
+    "expected_source": "vector-search-how-to-generate-embeddings",
+    "notes": null
+  },
+  {
+    "id": 15,
+    "question": "What is the capital of France?",
+    "expected_behavior": "unanswerable",
+    "expected_source": null,
+    "notes": "Bilgi tabanindaki hicbir konuyla alakasiz -- Faz 3.2/4.3 testlerinde de kullanildi, dogru sekilde NOT_FOUND_MESSAGE tetikledi."
+  },
+  {
+    "id": 16,
+    "question": "How do I train a custom neural network from scratch using PyTorch?",
+    "expected_behavior": "unanswerable",
+    "expected_source": null,
+    "notes": "Genel ML konusu ama bu bilgi tabaninda (Foundry Local/RAG/embedding dokumanlari) yok."
+  },
+  {
+    "id": 17,
+    "question": "What's the weather forecast for tomorrow?",
+    "expected_behavior": "unanswerable",
+    "expected_source": null,
+    "notes": null
+  },
+  {
+    "id": 18,
+    "question": "How much does a Tesla Model 3 cost?",
+    "expected_behavior": "unanswerable",
+    "expected_source": null,
+    "notes": null
+  },
+  {
+    "id": 19,
+    "question": "What is the population of Japan?",
+    "expected_behavior": "unanswerable",
+    "expected_source": null,
+    "notes": null
+  },
+  {
+    "id": 20,
+    "question": "Can you recommend a good recipe for lasagna?",
+    "expected_behavior": "unanswerable",
+    "expected_source": null,
+    "notes": "Bilgi tabaniyla tamamen alakasiz, kasitli olarak absurt bir soru."
+  }
+]
