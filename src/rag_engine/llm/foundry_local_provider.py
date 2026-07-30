@@ -1,3 +1,5 @@
+from collections.abc import Iterator
+
 from openai import OpenAI
 
 from rag_engine.config import FOUNDRY_BASE_URL, FOUNDRY_MODEL_ALIAS
@@ -22,3 +24,18 @@ class FoundryLocalProvider(LLMProvider):
             messages=[{"role": "user", "content": prompt}],
         )
         return response.choices[0].message.content
+
+    def generate_stream(self, prompt: str) -> Iterator[str]:
+        stream = self._client.chat.completions.create(
+            model=self._model_alias,
+            messages=[{"role": "user", "content": prompt}],
+            stream=True,
+        )
+        for chunk in stream:
+            # Bazi streamlerde son chunk (usage bilgisiyle) bos bir
+            # choices listesi tasir -- bu durumda atlanir.
+            if not chunk.choices:
+                continue
+            delta = chunk.choices[0].delta.content
+            if delta:
+                yield delta

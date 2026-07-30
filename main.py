@@ -51,9 +51,18 @@ if __name__ == "__main__":
             print("Gorusuruz.")
             break
 
-        answer = pipeline.answer_query(question, history=history[-HISTORY_LIMIT:])
-        print(f"\nCevap: {answer.text}")
-        if answer.sources:
-            print(f"Kaynak: {', '.join(answer.sources)}")
+        # Faz 3.3: cevabi tek seferde degil, kelime kelime canli yazdir.
+        stream, get_sources = pipeline.answer_query_stream(question, history=history[-HISTORY_LIMIT:])
+        print("\nCevap: ", end="", flush=True)
+        answer_parts: list[str] = []
+        for piece in stream:
+            print(piece, end="", flush=True)
+            answer_parts.append(piece)
         print()
-        history.append(ConversationTurn(question=question, answer=answer.text))
+
+        sources = get_sources()
+        if sources:
+            print(f"Kaynak: {', '.join(sources)}")
+        print()
+
+        history.append(ConversationTurn(question=question, answer="".join(answer_parts)))

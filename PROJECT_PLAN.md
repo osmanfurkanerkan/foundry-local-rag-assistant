@@ -243,6 +243,7 @@ Kullanıcıya Cevap (+ kaynak gösterimi)
   - CLI'da kelime kelime yazdırma
 - **Teknoloji:** Foundry Local streaming API
 - **Çıktı:** Akıcı, canlı yazan bir CLI deneyimi
+- **Not:** `LLMProvider`'a `generate_stream(prompt) -> Iterator[str]` soyut metodu eklendi; `FoundryLocalProvider` bunu `stream=True` ile OpenAI-uyumlu chat completions çağrısı üzerinden uyguluyor. `RagPipeline`'a `answer_query_stream` eklendi -- retrieval/prompt hazırlığını (`_prepare`) `answer_query` ile paylaşıyor, `(iterator, get_sources)` çifti döndürüyor; kaynak listesi ancak akış tamamen tüketilip tam metin toplandıktan sonra hesaplanabiliyor (NOT_FOUND_MESSAGE kontrolü tam cümleye ihtiyaç duyuyor). `main.py` artık `answer_query` yerine bunu kullanıp parçaları geldikçe basıyor. Test sırasında gerçek bir hata yakalandı: Foundry Local'in stream'indeki son chunk (usage bilgisiyle) boş bir `choices` listesi taşıyor, `chunk.choices[0]` bu yüzden `IndexError` veriyordu -- `if not chunk.choices: continue` ile düzeltildi.
 
 ---
 
@@ -453,7 +454,7 @@ Kullanıcıya Cevap (+ kaynak gösterimi)
 - [x] Faz 2.4 — Mini Benchmark
 - [x] Faz 3.1 — Multi-turn Hafıza
 - [x] Faz 3.2 — Kaynak Gösterme
-- [ ] Faz 3.3 — Streaming Yanıt
+- [x] Faz 3.3 — Streaming Yanıt
 - [ ] Faz 4.1 — LangChain/LangGraph Geçişi
 - [ ] Faz 4.2 — Query Rewriting
 - [ ] Faz 4.3 — Corrective RAG
