@@ -280,6 +280,7 @@ Kullanıcıya Cevap (+ kaynak gösterimi)
   - Yetersizse: query rewriting'i tekrar dene veya top-k'yı artır
 - **Teknoloji:** LangGraph (döngüsel/koşullu akışlar için)
 - **Çıktı:** Zayıf sonuçlarda kendini düzelten bir retrieval döngüsü
+- **Not:** `pipeline/corrective_rag_pipeline.py`: LangGraph ile `rewrite -> retrieve -> grade -> (yeterli: generate) | (yetersiz: bump_attempt -> rewrite)` akışı kuruldu. Grading, chunk'ların soruyu cevaplamaya yeterli olup olmadığını LLM'e YES/NO sordurarak yapılıyor; yetersizse Faz 4.2'nin `expand_query`'si "farklı strateji" olarak kullanılıp k artırılıyor (en fazla 2 deneme). `scripts/test_corrective_rag.py`, Faz 2.4'te bulunan zayıf noktayı (get-started/what-is-foundry-local/architecture konu örtüşmesi) bilinçli olarak k=1 ile tetikleyip `.stream()` ile adım adım gözlemliyor. **Gerçek test sonucu çok öğretici:** 1. denemede (k=1) bulunan tek chunk doğru şekilde "yetersiz" bulundu; retry'de `expand_query`, Türkçe soruyu ("Foundry Local'i nasıl kurar ve çalıştırırım?") **"Foundry"yi kelimenin düz anlamıyla (döküm/inşaat ustalığı) yorumlayıp** "Investigate the condition of Foundry Local's brickwork and masonry..." gibi tamamen alakasız bir sorguya çevirdi -- Faz 1.5/2.2'de görülen "küçük yerel modelin Türkçe girdide tutarsızlaşması" örüntüsünün belki de en çarpıcı tekrarı. Buna rağmen hybrid retrieval (BM25 katmanı sayesinde) yine de konuyla ilgili chunk'lar buldu, ama grading bunları da "yetersiz" olarak işaretledi (haklı olarak -- getirilen parçalar kurulum adımları değil, "related content" link listeleriydi). 2 deneme hakkı tükenince sistem **halüsinasyon üretmek yerine dürüstçe "I could not find this in the available documents." dedi** -- Faz 3.2'nin dürüstlük mekanizmasının tam da tasarlandığı gibi devreye girdiği, olumlu bir sonuç.
 
 ### Faz 4.4 — (Opsiyonel Stretch) Multi-Corpus Router
 
@@ -290,6 +291,7 @@ Kullanıcıya Cevap (+ kaynak gösterimi)
   - Basit bir "router" promptu: soru hangi kaynağa daha yakın, oraya yönlendir
 - **Teknoloji:** LangGraph
 - **Çıktı:** İki farklı kaynak arasında akıllıca seçim yapabilen asistan
+- **Not:** Opsiyonel/stretch olarak işaretlendiği için şimdilik ertelendi -- ikinci koleksiyon için gerçek bir içerik (kişisel ders notları/CV vb.) gerekiyor, sentetik bir placeholder yerine gerçek içerikle yapılması tercih edildi. Faz 5'e geçildi, buraya daha sonra dönülebilir.
 
 ---
 
@@ -459,8 +461,8 @@ Kullanıcıya Cevap (+ kaynak gösterimi)
 - [x] Faz 3.3 — Streaming Yanıt
 - [x] Faz 4.1 — LangChain/LangGraph Geçişi
 - [x] Faz 4.2 — Query Rewriting
-- [ ] Faz 4.3 — Corrective RAG
-- [ ] Faz 4.4 — Multi-Corpus Router (opsiyonel)
+- [x] Faz 4.3 — Corrective RAG
+- [ ] Faz 4.4 — Multi-Corpus Router (opsiyonel, ertelendi)
 - [ ] Faz 5.1 — Test Soru Seti
 - [ ] Faz 5.2 — RAGAS Metrikleri
 - [ ] Faz 5.3 — Regresyon Testleri
