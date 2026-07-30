@@ -220,6 +220,7 @@ Kullanıcıya Cevap (+ kaynak gösterimi)
   - Takip sorularını, geçmişe bakarak yeniden ifade etme (query rewriting'in basit hali)
 - **Teknoloji:** Python, Foundry Local chat API
 - **Çıktı:** "Bu konuda daha fazla bilgi var mı?" gibi takip sorularını doğru işleyen asistan
+- **Not:** `interfaces/models.py`'a `ConversationTurn(question, answer)` eklendi; `main.py` konuşma geçmişini bir listede tutup (son `HISTORY_LIMIT=5` tur) her `answer_query` çağrısına geçiyor. Yeni `pipeline/query_rewriter.py`, geçmiş varsa retrieval'dan önce LLM'e takip sorusunu ("peki ya X" gibi zamir/referans içeren) bağımsız bir arama sorgusuna çevirtiyor (basit query rewriting); geçmiş boşsa (ilk soru) bu adım atlanıp gereksiz bir LLM çağrısından kaçınılıyor. Ayrıca `prompt_builder.build_prompt` da geçmişi cevap üretim promptuna dahil ediyor, böylece model hem retrieval hem cevap aşamasında önceki turu görebiliyor. Uçtan uca test: "What is Foundry Local?" sonrası "How does its architecture work?" sorusu doğru şekilde Foundry Local'in mimarisiyle ilgili chunk'ları buldu ve isabetli cevap üretti — "its" zamiri geçmişten doğru çözümlendi.
 
 ### Faz 3.2 — Kaynak Gösterme ve "Bilmiyorum" Davranışı
 
@@ -449,7 +450,7 @@ Kullanıcıya Cevap (+ kaynak gösterimi)
 - [x] Faz 2.2 — Reranking
 - [x] Faz 2.3 — Akıllı Chunking
 - [x] Faz 2.4 — Mini Benchmark
-- [ ] Faz 3.1 — Multi-turn Hafıza
+- [x] Faz 3.1 — Multi-turn Hafıza
 - [ ] Faz 3.2 — Kaynak Gösterme
 - [ ] Faz 3.3 — Streaming Yanıt
 - [ ] Faz 4.1 — LangChain/LangGraph Geçişi

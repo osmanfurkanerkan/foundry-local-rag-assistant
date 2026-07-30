@@ -14,3 +14,11 @@ class Chunk:
     source: str
     chunk_index: int
     text: str
+
+
+@dataclass(frozen=True)
+class ConversationTurn:
+    """Bir onceki soru-cevap cifti (Faz 3.1: multi-turn hafiza icin)."""
+
+    question: str
+    answer: str

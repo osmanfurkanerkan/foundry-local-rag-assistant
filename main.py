@@ -10,6 +10,7 @@ sys.stdout.reconfigure(encoding="utf-8")
 sys.path.insert(0, str(Path(__file__).resolve().parent / "src"))
 
 from rag_engine.embeddings.foundry_local_embedder import FoundryLocalEmbedder
+from rag_engine.interfaces.models import ConversationTurn
 from rag_engine.llm.foundry_local_provider import FoundryLocalProvider
 from rag_engine.pipeline.rag_pipeline import RagPipeline
 from rag_engine.retrieval.bm25_retriever import BM25Retriever
@@ -31,8 +32,13 @@ def build_pipeline() -> RagPipeline:
     return RagPipeline(retriever=reranking_retriever, llm=FoundryLocalProvider())
 
 
+# Faz 3.1: kac onceki turun modele gosterilecegi -- sinirsiz buyursen prompt
+# gereksiz sisirilir, gecmis konuyla alakasi azalan eski turlar de gurultu katar.
+HISTORY_LIMIT = 5
+
 if __name__ == "__main__":
     pipeline = build_pipeline()
+    history: list[ConversationTurn] = []
 
     print("Local RAG Assistant (Foundry Local + Foundry Local docs)")
     print("Cikmak icin 'exit' yaz.\n")
@@ -45,5 +51,6 @@ if __name__ == "__main__":
             print("Gorusuruz.")
             break
 
-        answer = pipeline.answer_query(question)
+        answer = pipeline.answer_query(question, history=history[-HISTORY_LIMIT:])
         print(f"\nCevap: {answer}\n")
+        history.append(ConversationTurn(question=question, answer=answer))
