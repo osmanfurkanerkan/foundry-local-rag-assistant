@@ -3,6 +3,7 @@ from collections.abc import Callable, Iterator
 from rag_engine.interfaces.models import Chunk, ConversationTurn, RagAnswer
 from rag_engine.llm.base import LLMProvider
 from rag_engine.pipeline.prompt_builder import NOT_FOUND_MESSAGE, build_prompt
+from rag_engine.pipeline.query_expansion import expand_query
 from rag_engine.pipeline.query_rewriter import rewrite_query
 from rag_engine.retrieval.base import RetrievalStrategy
 
@@ -15,15 +16,22 @@ class RagPipeline:
     kullanildigini bilmez.
     """
 
-    def __init__(self, retriever: RetrievalStrategy, llm: LLMProvider):
+    def __init__(self, retriever: RetrievalStrategy, llm: LLMProvider, use_query_expansion: bool = False):
         self._retriever = retriever
         self._llm = llm
+        # Faz 4.2: varsayilan olarak kapali -- her sorguya ekstra bir LLM
+        # cagrisi eklemek gecikme/maliyet getirir, bu yuzden opt-in birakildi.
+        self._use_query_expansion = use_query_expansion
 
     def _prepare(self, question: str, history: list[ConversationTurn], k: int) -> tuple[str, list[Chunk]]:
         # Faz 3.1: takip sorusunu ("peki ya bu?" gibi) gecmise bakarak once
         # bagimsiz bir arama sorgusuna cevir, retrieval'i bununla yap; ama
         # modele gosterilen QUESTION hala kullanicinin orijinal ifadesi kalsin.
         search_query = rewrite_query(question, history, self._llm)
+        # Faz 4.2: gecmisten bagimsiz, sorgunun kendisini (belirsiz/kotu
+        # ifade edilmis olabilir) retrieval icin daha iyi bir hale getir.
+        if self._use_query_expansion:
+            search_query = expand_query(search_query, self._llm)
         chunks = self._retriever.get_top_chunks(search_query, k)
         prompt = build_prompt(question, chunks, history)
         return prompt, chunks

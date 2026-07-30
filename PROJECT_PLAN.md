@@ -269,6 +269,7 @@ Kullanıcıya Cevap (+ kaynak gösterimi)
   - Öncesi/sonrası retrieval sonuçlarını karşılaştır
 - **Teknoloji:** LangChain, Foundry Local
 - **Çıktı:** Query rewriting açık/kapalı iki modun karşılaştırmalı testi
+- **Not:** `pipeline/query_expansion.py`'da `expand_query`, sorguyu (Faz 3.1'in takip-sorusu çözümlemesinden bağımsız olarak) LLM ile daha aramaya elverişli hale getirmeye çalışıyor. `RagPipeline`'a opt-in bir `use_query_expansion` bayrağı eklendi (varsayılan kapalı). `scripts/test_query_expansion.py` ile 4 kasıtlı belirsiz/gündelik sorguda (örn. "how do i get this thing running on my machine?", "whats RAG") açık/kapalı karşılaştırıldı: **sonuç karışık, bazen belirgin şekilde kötüleşti.** "how do i get this thing running on my machine?" ham haliyle doğru şekilde `get-started` sayfasını buluyorken, genişletilmiş hali ("install and configure the software application...") bunu tamamen kaçırdı -- model "this thing"i Foundry Local'e özgü bağlamdan koparıp genel bir ifadeye çevirmiş. Daha çarpıcısı: "whats RAG" sorgusu genişletilirken küçük model "RAG" kısaltmasını "Retrieval-Augmented Generation" yerine "Reactive Agent Granularity" diye **yanlış açtı** -- yine de retrieval sonuçları rastlantısal olarak hâlâ doğru kaynaklara isabet etti. Bu, Faz 1.5/2.2'de görülen "küçük/yerel modelin belirsiz görevlerde tutarsız davranması" örüntüsünün bir tekrarı. Bulgu: bu adımı varsayılan olarak kapalı bırakmak (opt-in) doğru tasarım kararıydı -- her sorguya ekstra bir LLM çağrısı eklemenin hem gecikme hem de bazen kalite maliyeti var, kazancı garanti değil.
 
 ### Faz 4.3 — Corrective RAG (Self-Grading Retrieval)
 
@@ -457,7 +458,7 @@ Kullanıcıya Cevap (+ kaynak gösterimi)
 - [x] Faz 3.2 — Kaynak Gösterme
 - [x] Faz 3.3 — Streaming Yanıt
 - [x] Faz 4.1 — LangChain/LangGraph Geçişi
-- [ ] Faz 4.2 — Query Rewriting
+- [x] Faz 4.2 — Query Rewriting
 - [ ] Faz 4.3 — Corrective RAG
 - [ ] Faz 4.4 — Multi-Corpus Router (opsiyonel)
 - [ ] Faz 5.1 — Test Soru Seti
