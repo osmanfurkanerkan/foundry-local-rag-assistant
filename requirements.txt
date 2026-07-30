@@ -21,3 +21,7 @@ sentence-transformers
 
 # Faz 2.3: baslik/paragraf bazli akilli chunking
 langchain-text-splitters
+
+# Faz 4.1: LangChain'e gecis (LCEL chain + BaseRetriever adapter)
+langchain
+langchain-openai

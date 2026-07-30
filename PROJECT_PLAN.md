@@ -258,6 +258,7 @@ Kullanıcıya Cevap (+ kaynak gösterimi)
   - Foundry Local'ı LangChain'in LLM arayüzüne bağla (custom wrapper gerekebilir)
 - **Teknoloji:** LangChain
 - **Çıktı:** Aynı davranışı gösteren, ama LangChain üzerinde çalışan pipeline
+- **Not:** Beklenenin aksine custom bir LLM wrapper'a gerek kalmadı -- Foundry Local zaten OpenAI-uyumlu bir REST servisi olduğu için LangChain'in standart `ChatOpenAI`'ı (`langchain-openai`) `base_url` override edilerek doğrudan kullanılabildi. `llm/langchain_foundry_provider.py`: `LangchainFoundryProvider`, generate/prompt adımını bir LCEL zinciri (`prompt | llm | StrOutputParser()`) olarak kuruyor, `LLMProvider` arayüzünü koruyor. `retrieval/langchain_retriever_adapter.py`: `LangchainRetrieverAdapter`, Faz 2'nin hybrid+rerank yığınını (`RerankingRetriever`) hiç değiştirmeden LangChain'in `BaseRetriever` sınıfına sarıyor -- hem `get_top_chunks` (kendi `RetrievalStrategy` sözleşmemiz, RagPipeline bunu kullanıyor) hem `invoke()` (saf LangChain yolu) ile çalışabiliyor. `main.py` bu ikisini kullanacak şekilde güncellendi; Dependency Inversion sayesinde `RagPipeline`, `query_rewriter` gibi Faz 3 kodlarında hiçbir değişiklik gerekmedi. Uçtan uca test: multi-turn takip sorusu, kaynak gösterimi ve "bilmiyorum" davranışı LangChain üzerinden de birebir aynı çalıştı.
 
 ### Faz 4.2 — Query Rewriting
 
@@ -455,7 +456,7 @@ Kullanıcıya Cevap (+ kaynak gösterimi)
 - [x] Faz 3.1 — Multi-turn Hafıza
 - [x] Faz 3.2 — Kaynak Gösterme
 - [x] Faz 3.3 — Streaming Yanıt
-- [ ] Faz 4.1 — LangChain/LangGraph Geçişi
+- [x] Faz 4.1 — LangChain/LangGraph Geçişi
 - [ ] Faz 4.2 — Query Rewriting
 - [ ] Faz 4.3 — Corrective RAG
 - [ ] Faz 4.4 — Multi-Corpus Router (opsiyonel)
