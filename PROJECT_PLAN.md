@@ -317,6 +317,7 @@ Kullanıcıya Cevap (+ kaynak gösterimi)
   - Test soru setini çalıştırıp metrikleri hesapla
 - **Teknoloji:** RAGAS
 - **Çıktı:** Bir metrik raporu (örn. `eval_report.md`)
+- **Not:** RAGAS'tan vazgeçmek zorunda kalındı -- `ragas==0.4.3` kurulunca (`pip install ragas`), paket `langchain-community`'nin artık kaldırılmış bir alt modülüne (`chat_models.vertexai`) sabit bir import yapıyor; bunu çözmeye çalışmak `langchain-community`'yi eski bir sürüme (`0.3.27`) düşürdü, bu da Faz 4.1/4.3'ün üzerine kurulduğu modern LangChain 1.x yığınını (`langchain-core`, `langchain-openai`, `langgraph`) bozdu. Çalışan agentic RAG özelliklerini geriletmek kabul edilebilir olmadığı için RAGAS kaldırıldı, ortam eski haline döndürüldü (`langchain==1.3.14` vb. yeniden kuruldu, `LangchainFoundryProvider` ile doğrulandı). Bunun yerine `scripts/run_evaluation.py`, RAGAS'ın ölçtüğü aynı kavramları (faithfulness, answer relevancy, retrieval doğruluğu) kendi basit YES/NO "LLM-judge" promptlarıyla ölçüyor -- ayrıca küçük modelin (phi-3.5-mini) yapılı/JSON çıktıda daha önce (Faz 1.5, 4.2) tutarsız olduğu bilindiği için bu zaten RAGAS'ın beklediği karmaşık yapılı çıktılardan daha güvenilir bir seçim. 20 sorunun tamamı çalıştırıldı, sonuç `data/eval/eval_report.md`'ye yazıldı: **retrieval hit rate %93, faithfulness %93, answer relevancy %93, correct refusal rate %100** (6/6 cevaplanamaz soru doğru şekilde reddedildi). Tek gerçek başarısızlık: "How do I load a model using the Foundry Local CLI?" sorusu beklenmedik şekilde hiç kaynak bulamadı (model "bulamadım" dedi) -- oysa aynı konudaki komşu soru (id 6, "What CLI commands does Foundry Local provide?") sorunsuz cevaplandı; muhtemelen retrieval bu spesifik ifadeyi (chunk'ların "nasıl yüklerim" fiiliyle tam örtüşmemesi) yeterince alakalı bulamadı.
 
 ### Faz 5.3 — Regresyon Testi Altyapısı
 
@@ -465,7 +466,7 @@ Kullanıcıya Cevap (+ kaynak gösterimi)
 - [x] Faz 4.3 — Corrective RAG
 - [ ] Faz 4.4 — Multi-Corpus Router (opsiyonel, ertelendi)
 - [x] Faz 5.1 — Test Soru Seti
-- [ ] Faz 5.2 — RAGAS Metrikleri
+- [x] Faz 5.2 — RAGAS Metrikleri (custom LLM-judge'a pivot edildi)
 - [ ] Faz 5.3 — Regresyon Testleri
 - [ ] Faz 6.1 — FastAPI Backend
 - [ ] Faz 6.2 — Web Arayüzü
