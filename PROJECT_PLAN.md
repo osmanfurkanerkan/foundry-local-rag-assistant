@@ -328,6 +328,7 @@ Kullanıcıya Cevap (+ kaynak gösterimi)
   - Eval setini periyodik çalıştıran bir script
 - **Teknoloji:** pytest
 - **Çıktı:** `tests/` klasöründe çalışan test paketi
+- **Not:** Foundry Local, GitHub Actions gibi CI runner'larında çalışamayacağı için (Faz 6.4'te bu bir sorun olurdu) testlerin çoğu `tests/conftest.py`'daki `FakeLLM`/`FakeRetriever` (kendi `LLMProvider`/`RetrievalStrategy` arayüzlerimizi uygulayan test double'ları) ile **sunucu gerektirmeden** çalışacak şekilde tasarlandı: `test_prompt_builder.py`, `test_rag_pipeline.py`, `test_query_transforms.py`, `test_chunkers.py`, `test_hybrid_retriever.py`, `test_corrective_rag_pipeline.py` (21 test, hepsi saf mantık -- kaynak gösterme, "bilmiyorum" davranışı, rewrite/expansion çağrı sırası, RRF birleştirme, corrective RAG'ın retry/fallback akışı). Gerçek sunucuya ihtiyaç duyan 3 test (`test_integration_live_server.py`) `@pytest.mark.integration` ile işaretlendi ve `require_live_server` fixture'ı (basit bir socket bağlantı kontrolü) sunucu çalışmıyorsa otomatik `pytest.skip()` yapıyor -- doğrulandı: sunucu kapalıyken 3 test de hatasız SKIPPED oluyor, açıkken 24 testin tamamı geçiyor. Faz 5.2'deki `scripts/run_evaluation.py` zaten "eval setini periyodik çalıştıran script" ihtiyacını karşılıyor, ayrıca bir şey yazılmadı.
 
 ---
 
@@ -467,7 +468,7 @@ Kullanıcıya Cevap (+ kaynak gösterimi)
 - [ ] Faz 4.4 — Multi-Corpus Router (opsiyonel, ertelendi)
 - [x] Faz 5.1 — Test Soru Seti
 - [x] Faz 5.2 — RAGAS Metrikleri (custom LLM-judge'a pivot edildi)
-- [ ] Faz 5.3 — Regresyon Testleri
+- [x] Faz 5.3 — Regresyon Testleri
 - [ ] Faz 6.1 — FastAPI Backend
 - [ ] Faz 6.2 — Web Arayüzü
 - [ ] Faz 6.3 — Docker

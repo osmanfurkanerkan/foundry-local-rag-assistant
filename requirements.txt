@@ -25,3 +25,6 @@ langchain-text-splitters
 # Faz 4.1: LangChain'e gecis (LCEL chain + BaseRetriever adapter)
 langchain
 langchain-openai
+
+# Faz 5.3: regresyon testleri
+pytest
