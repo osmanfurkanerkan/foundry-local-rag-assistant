@@ -52,5 +52,8 @@ if __name__ == "__main__":
             break
 
         answer = pipeline.answer_query(question, history=history[-HISTORY_LIMIT:])
-        print(f"\nCevap: {answer}\n")
-        history.append(ConversationTurn(question=question, answer=answer))
+        print(f"\nCevap: {answer.text}")
+        if answer.sources:
+            print(f"Kaynak: {', '.join(answer.sources)}")
+        print()
+        history.append(ConversationTurn(question=question, answer=answer.text))

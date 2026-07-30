@@ -22,3 +22,11 @@ class ConversationTurn:
 
     question: str
     answer: str
+
+
+@dataclass(frozen=True)
+class RagAnswer:
+    """Uretilen cevap metni + hangi kaynak dokumanlardan geldigi (Faz 3.2)."""
+
+    text: str
+    sources: list[str]

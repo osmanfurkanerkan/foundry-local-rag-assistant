@@ -36,4 +36,6 @@ if __name__ == "__main__":
         print(f"\n{'=' * 70}")
         print(f"SORU: {question}")
         print("=" * 70)
-        print(pipeline.answer_query(question))
+        answer = pipeline.answer_query(question)
+        print(answer.text)
+        print(f"Kaynak: {', '.join(answer.sources) if answer.sources else '(yok)'}")

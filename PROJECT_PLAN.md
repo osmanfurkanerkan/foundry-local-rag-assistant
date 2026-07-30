@@ -232,6 +232,7 @@ Kullanıcıya Cevap (+ kaynak gösterimi)
   - Prompt'a "bağlam yetersizse bilmediğini söyle" talimatını güçlendir, test et
 - **Teknoloji:** Prompt engineering
 - **Çıktı:** Kaynaklı cevaplar veren, bilmediğini itiraf edebilen asistan
+- **Not:** `interfaces/models.py`'a `RagAnswer(text, sources)` eklendi; `RagPipeline.answer_query` artık ham string yerine bunu dönüyor. `prompt_builder.py`'da `NOT_FOUND_MESSAGE` sabit, tam kelimesi kelimesine bir cümle olarak tanımlandı ("I could not find this in the available documents.") ve sistem talimatı "context yetersizse SADECE bu cümleyle cevap ver" şeklinde güçlendirildi. `RagPipeline`, cevapta bu cümle geçiyorsa kaynak listesini boş bırakıyor (sahte kaynak göstermemek için), geçmiyorsa retrieval'da kullanılan chunk'ların kaynaklarını (`chunk.source`, tekilleştirilmiş) döndürüyor. Uçtan uca test: "What is Foundry Local?" → cevap + `Kaynak: what-is-foundry-local`; "What is the capital of France?" (bilgi tabanında hiç yok) → tam olarak "I could not find this in the available documents." ve kaynak satırı yok.
 
 ### Faz 3.3 — Streaming Yanıt
 
@@ -451,7 +452,7 @@ Kullanıcıya Cevap (+ kaynak gösterimi)
 - [x] Faz 2.3 — Akıllı Chunking
 - [x] Faz 2.4 — Mini Benchmark
 - [x] Faz 3.1 — Multi-turn Hafıza
-- [ ] Faz 3.2 — Kaynak Gösterme
+- [x] Faz 3.2 — Kaynak Gösterme
 - [ ] Faz 3.3 — Streaming Yanıt
 - [ ] Faz 4.1 — LangChain/LangGraph Geçişi
 - [ ] Faz 4.2 — Query Rewriting
