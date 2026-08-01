@@ -353,6 +353,7 @@ Kullanıcıya Cevap (+ kaynak gösterimi)
   - Streamlit ile hızlı bir arayüz **veya** basit bir HTML/JS + fetch ile FastAPI'ye bağlanan minimal bir sayfa
 - **Teknoloji:** Streamlit (hızlı) veya HTML/JS (daha gösterişli)
 - **Çıktı:** Tarayıcıda çalışan, soru sorup cevap alınabilen arayüz
+- **Not:** HTML/JS seçildi -- ayrı bir süreç/port açan Streamlit yerine, Faz 6.1'de kurulan API'nin kendisinden servis edilen tek bir statik sayfa (`static/index.html`, build adımı yok, gömülü CSS/JS). `api.py`'a `/ask` rotasından SONRA `StaticFiles(directory="static", html=True)` mount edildi -- API rotaları önce eşleşiyor, geri kalan her yol statik dosyaya düşüyor. Sohbet geçmişi tarayıcıda (JS `history` dizisi) tutulup her istekte `/ask`'a geri gönderiliyor (Faz 6.1'in stateless tasarımıyla birebir uyumlu). Gerçek tarayıcıda (Chrome DevTools ile) test edildi: soru-cevap akışı, "Yazıyor..." göstergesi, kaynak gösterimi, takip sorusunda "its" zamirinin doğru çözümlenmesi ve alakasız soruda doğru "bulamadım" mesajı -- hepsi CLI/API ile birebir aynı davranışı gösterdi.
 
 ### Faz 6.3 — Docker Paketleme
 
@@ -471,7 +472,7 @@ Kullanıcıya Cevap (+ kaynak gösterimi)
 - [x] Faz 5.2 — RAGAS Metrikleri (custom LLM-judge'a pivot edildi)
 - [x] Faz 5.3 — Regresyon Testleri
 - [x] Faz 6.1 — FastAPI Backend
-- [ ] Faz 6.2 — Web Arayüzü
+- [x] Faz 6.2 — Web Arayüzü
 - [ ] Faz 6.3 — Docker
 - [ ] Faz 6.4 — GitHub Actions CI
 - [ ] Faz 7.1 — README ve Mimari Diyagram

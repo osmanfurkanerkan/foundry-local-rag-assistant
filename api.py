@@ -7,6 +7,7 @@ Test: curl -X POST http://127.0.0.1:8000/ask -H "Content-Type: application/json"
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, HTTPException
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
 from main import build_pipeline
@@ -59,3 +60,8 @@ def ask(request: AskRequest) -> AskResponse:
         raise HTTPException(status_code=503, detail=f"RAG pipeline hatasi: {exc}") from exc
 
     return AskResponse(answer=result.text, sources=result.sources)
+
+
+# Faz 6.2: basit HTML/JS sohbet arayuzu -- /ask'tan SONRA mount edildigi icin
+# API rotalari once eslesir, geri kalan her yol (orn. "/") static/index.html'e gider.
+app.mount("/", StaticFiles(directory="static", html=True), name="static")
