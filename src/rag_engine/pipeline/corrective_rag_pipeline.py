@@ -14,7 +14,7 @@ from langgraph.graph import END, StateGraph
 
 from rag_engine.interfaces.models import Chunk, ConversationTurn, RagAnswer
 from rag_engine.llm.base import LLMProvider
-from rag_engine.pipeline.prompt_builder import NOT_FOUND_MESSAGE, build_prompt
+from rag_engine.pipeline.prompt_builder import build_prompt, is_refusal
 from rag_engine.pipeline.query_expansion import expand_query
 from rag_engine.pipeline.query_rewriter import rewrite_query
 from rag_engine.retrieval.base import RetrievalStrategy
@@ -83,7 +83,7 @@ def build_corrective_rag_graph(retriever: RetrievalStrategy, llm: LLMProvider):
     def generate_node(state: CorrectiveRagState) -> dict:
         prompt = build_prompt(state["question"], state["chunks"], state["history"])
         answer_text = llm.generate(prompt)
-        if NOT_FOUND_MESSAGE in answer_text:
+        if is_refusal(answer_text):
             sources: list[str] = []
         else:
             sources = sorted({chunk.source for chunk in state["chunks"]})

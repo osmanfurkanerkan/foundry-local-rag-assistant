@@ -16,6 +16,19 @@ SYSTEM_INSTRUCTION = (
 )
 
 
+def is_refusal(answer_text: str) -> bool:
+    """Cevabin gercekten bir "bulamadim" reddi olup olmadigina karar verir.
+
+    Faz 7.3'te canli provada gercek bir sorun bulundu: kucuk model bazen
+    dogru bir cevabin SONUNA, dejenere bir tekrar davranisi olarak,
+    NOT_FOUND_MESSAGE'i ekliyor. Ifadenin metnin HERHANGI bir yerinde gecip
+    gecmedigine bakmak (eski davranis) bu durumda gecerli bir cevabin
+    kaynaklarini yanlislikla gizliyordu. Bunun yerine cevabin GERCEKTEN bu
+    ifadeyle basliyor olmasi araniyor.
+    """
+    return answer_text.strip().startswith(NOT_FOUND_MESSAGE)
+
+
 def build_prompt(question: str, chunks: list[Chunk], history: list[ConversationTurn] | None = None) -> str:
     """Sistem talimati + (varsa) konusma gecmisi + bulunan chunk'lar + soruyu birlestirir.
 

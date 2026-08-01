@@ -409,6 +409,7 @@ Kullanıcıya Cevap (+ kaynak gösterimi)
   - Problem tanımı → mimari özet → canlı demo (biri kaynak gösteren, biri "bilmiyorum" diyen soru) → öğrenilen dersler
 - **Teknoloji:** —
 - **Çıktı:** Prova edilmiş bir sunum akışı
+- **Not:** `DEMO_SCRIPT.md` yazıldı ve gerçek sunucuda fiilen prova edildi -- bu, fazın en değerli sonucunu ortaya çıkardı: **canlı prova sırasında gerçek bir bug bulundu.** Demo için planlanan kaynaklı-cevap sorusu bir denemede kaynaksız döndü; kök neden, küçük modelin bazen doğru bir cevabın SONUNA "I could not find this..." ifadesini dejenere bir tekrar davranışı olarak eklemesi, ve `NOT_FOUND_MESSAGE in answer_text` şeklindeki basit substring kontrolünün bunu tüm cevabı geçersiz sanıp kaynakları gizlemesiydi. `prompt_builder.py`'a `is_refusal()` fonksiyonu eklendi (cevap GERÇEKTEN bu ifadeyle mi başlıyor diye bakıyor, herhangi bir yerinde geçip geçmediğine değil) ve hem `RagPipeline` hem `CorrectiveRagPipeline`'daki iki kopya kontrol buna yönlendirildi (aynı zamanda bir DRY düzeltmesi). Regresyon testi eklendi (26. test), tekrar canlı test edilip doğrulandı. Ders: "prova etmeden demo'ya çıkma" sözü klişe değil -- tam da bu fazda gerçek bir kanıtı oldu.
 
 ---
 
@@ -482,5 +483,5 @@ Kullanıcıya Cevap (+ kaynak gösterimi)
 - [x] Faz 6.4 — GitHub Actions CI (push edildi, gerçek yeşil tik doğrulandı)
 - [x] Faz 7.1 — README ve Mimari Diyagram
 - [x] Faz 7.2 — Kod Temizliği
-- [ ] Faz 7.3 — Demo Provası
+- [x] Faz 7.3 — Demo Provası
 - [ ] Faz 8.x — Portfolyo Entegrasyonu (ayrı proje, ileride)

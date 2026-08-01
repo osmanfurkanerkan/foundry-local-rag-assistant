@@ -2,7 +2,7 @@ from collections.abc import Callable, Iterator
 
 from rag_engine.interfaces.models import Chunk, ConversationTurn, RagAnswer
 from rag_engine.llm.base import LLMProvider
-from rag_engine.pipeline.prompt_builder import NOT_FOUND_MESSAGE, build_prompt
+from rag_engine.pipeline.prompt_builder import build_prompt, is_refusal
 from rag_engine.pipeline.query_expansion import expand_query
 from rag_engine.pipeline.query_rewriter import rewrite_query
 from rag_engine.retrieval.base import RetrievalStrategy
@@ -40,7 +40,7 @@ class RagPipeline:
     def _sources_for(answer_text: str, chunks: list[Chunk]) -> list[str]:
         # Faz 3.2: model "bulamadim" derse chunk'lar alakasiz demektir --
         # o durumda sahte/yaniltici bir kaynak listesi gostermiyoruz.
-        if NOT_FOUND_MESSAGE in answer_text:
+        if is_refusal(answer_text):
             return []
         return sorted({chunk.source for chunk in chunks})
 
