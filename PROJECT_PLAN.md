@@ -398,6 +398,8 @@ Kullanıcıya Cevap (+ kaynak gösterimi)
   - Kod gözden geçirme, gereksiz kodu silme
 - **Teknoloji:** —
 - **Çıktı:** Temiz, okunabilir kod tabanı
+- **Not:** `ruff` ad-hoc kurulup `src/`, `main.py`, `api.py`, `scripts/`, `tests/` üzerinde tam bir lint taraması yapıldı. Pyflakes (F-kategorisi: kullanılmayan import/değişken/ölü kod) **sıfır hata** verdi -- kodun aşamalı, dikkatli geliştirme tarzının bir sonucu. Debug `print()`/`TODO`/`pdb` kalıntısı da bulunmadı. `E501` (satır uzunluğu) ve `E402` (dosya başında olmayan import) uyarıları bilinçli olarak görmezden gelindi: `E402`, script'lerin `sys.path.insert()` sonrası `rag_engine` import etme deseninden kaynaklanıyor ve kasıtlı/gerekli; `E501`'in varsayılan 88 karakter sınırı bu projenin zaten benimsediği bir konvansiyon değil (`src/`'de tek başına 47 satır bunu aşıyor) -- ruff'ın keyfi varsayılanını kovalamak yerine `api.py`'deki gerçekten okunması zor tek satırı (uzun bir curl örneği) düzeltmekle yetinildi.
+- **Çıktı:** Temiz, okunabilir kod tabanı
 
 ### Faz 7.3 — Demo Günü Provası
 
@@ -479,6 +481,6 @@ Kullanıcıya Cevap (+ kaynak gösterimi)
 - [x] Faz 6.3 — Docker (yazıldı, build/run bu ortamda test edilemedi -- Docker kurulu değil)
 - [x] Faz 6.4 — GitHub Actions CI (push edildi, gerçek yeşil tik doğrulandı)
 - [x] Faz 7.1 — README ve Mimari Diyagram
-- [ ] Faz 7.2 — Kod Temizliği
+- [x] Faz 7.2 — Kod Temizliği
 - [ ] Faz 7.3 — Demo Provası
 - [ ] Faz 8.x — Portfolyo Entegrasyonu (ayrı proje, ileride)

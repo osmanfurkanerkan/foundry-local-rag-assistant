@@ -2,7 +2,8 @@
 
 Onkosul: `foundry server start` calisiyor, hem chat hem embedding modeli yuklu olmali.
 Kullanim: .venv/Scripts/uvicorn.exe api:app --reload
-Test: curl -X POST http://127.0.0.1:8000/ask -H "Content-Type: application/json" -d "{\"question\": \"What is Foundry Local?\"}"
+Test: curl -X POST http://127.0.0.1:8000/ask -H "Content-Type: application/json" \
+        -d "{\"question\": \"What is Foundry Local?\"}"
 """
 from contextlib import asynccontextmanager
 
