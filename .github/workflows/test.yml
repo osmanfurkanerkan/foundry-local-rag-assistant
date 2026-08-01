@@ -1,0 +1,28 @@
+name: Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run tests
+        # Foundry Local'a ihtiyac duyan @pytest.mark.integration testleri,
+        # bu runner'da sunucu bulunamadigi icin (Faz 5.3'teki
+        # require_live_server fixture'i sayesinde) otomatik atlanir --
+        # geriye kalan sunucu gerektirmeyen testler burada calisir.
+        run: pytest -v
