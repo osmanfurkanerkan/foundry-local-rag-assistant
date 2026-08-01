@@ -1,0 +1,19 @@
+services:
+  rag-api:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      # Foundry Local host makinede calisiyor; container'dan
+      # "host.docker.internal" ile erisiliyor. Port sabit degil -- kendi
+      # makinende `foundry server status` ile ogrenip burayi guncelle.
+      FOUNDRY_BASE_URL: "http://host.docker.internal:52034/v1"
+    extra_hosts:
+      # Docker Desktop (Windows/Mac) bu DNS adini zaten taniyor; Linux'ta
+      # host.docker.internal varsayilan olarak yok, bu satir onu ekliyor.
+      - "host.docker.internal:host-gateway"
+    volumes:
+      # Vektor DB, Foundry Local'e ihtiyac duydugu icin `docker build`
+      # sirasinda degil, host'ta `scripts/build_vector_db.py` ile onceden
+      # olusturulup calisma zamaninda salt-okunur mount ediliyor.
+      - ./chroma_db:/app/chroma_db:ro

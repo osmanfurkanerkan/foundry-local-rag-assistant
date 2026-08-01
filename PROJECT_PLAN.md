@@ -364,6 +364,7 @@ Kullanıcıya Cevap (+ kaynak gösterimi)
   - `docker build` + `docker run` ile test et
 - **Teknoloji:** Docker
 - **Çıktı:** Tek komutla çalışan bir container
+- **Not:** ⚠️ `Dockerfile`, `.dockerignore` ve `docker-compose.yml` yazıldı ama **bu ortamda `docker build`/`docker run` ile doğrulanamadı** -- `docker --version` hem Bash hem PowerShell'de "command not found" verdi, Docker kurulu değil. Bunu gizlemek yerine olduğu gibi not ediyorum: bu, kendi makinende (Docker Desktop kuruluysa) `docker compose up --build` ile test edilmesi gereken bir adım. Tasarım kararları: (1) Foundry Local Windows/Mac'e özgü yerel bir runtime olduğu için container'ın **içine paketlenmedi** -- container, `FOUNDRY_BASE_URL=http://host.docker.internal:<port>/v1` ile host'taki Foundry Local'e ağ üzerinden bağlanıyor (`docker-compose.yml`'de `extra_hosts: host.docker.internal:host-gateway` ile Linux uyumluluğu da eklendi). (2) `chroma_db/` build zamanında image'a gömülmedi (Foundry Local'e ihtiyaç duyduğu için `docker build` sırasında değil, host'ta `scripts/build_vector_db.py` ile önceden oluşturulup çalışma zamanında salt-okunur mount ediliyor). Kod tarafında bunu mümkün kılan şey: `foundry-local-sdk` paketinin kodda hiç import edilmediğinin fark edilmesi -- uygulama zaten sadece OpenAI-uyumlu REST çağrıları (`openai`/`langchain-openai`) kullanıyor, bu da Linux container'dan host'a HTTP ile bağlanmayı sorunsuz hale getiriyor.
 
 ### Faz 6.4 — GitHub Actions CI
 
@@ -473,7 +474,7 @@ Kullanıcıya Cevap (+ kaynak gösterimi)
 - [x] Faz 5.3 — Regresyon Testleri
 - [x] Faz 6.1 — FastAPI Backend
 - [x] Faz 6.2 — Web Arayüzü
-- [ ] Faz 6.3 — Docker
+- [x] Faz 6.3 — Docker (yazıldı, build/run bu ortamda test edilemedi -- Docker kurulu değil)
 - [ ] Faz 6.4 — GitHub Actions CI
 - [ ] Faz 7.1 — README ve Mimari Diyagram
 - [ ] Faz 7.2 — Kod Temizliği
