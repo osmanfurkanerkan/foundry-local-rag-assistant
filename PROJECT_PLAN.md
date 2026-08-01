@@ -374,7 +374,7 @@ Kullanıcıya Cevap (+ kaynak gösterimi)
   - `.github/workflows/test.yml` ile pytest'i her push'ta çalıştır
 - **Teknoloji:** GitHub Actions
 - **Çıktı:** Yeşil tik alan bir CI pipeline'ı
-- **Not:** `.github/workflows/test.yml` yazıldı: `main`'e her push/PR'da Ubuntu runner'da Python 3.12 kurup `pytest -v` çalıştırıyor. Faz 5.3'te testlerin bilinçli olarak sunucu gerektirmeyecek şekilde tasarlanmış olması burada karşılığını buluyor -- `@pytest.mark.integration` testleri `require_live_server` fixture'ı sayesinde runner'da Foundry Local bulunamadığı için otomatik atlanacak, geri kalan 21 test sorunsuz çalışmalı. ⚠️ "Yeşil tik" iddiasını gerçekten doğrulamak için `origin/main`'e push gerekiyor -- repo şu an local'de 12 commit ileride, henüz push edilmedi. Bu adım kullanıcı onayı gerektiriyor (paylaşılan/uzak bir duruma etki ettiği için).
+- **Not:** `.github/workflows/test.yml` yazıldı: `main`'e her push/PR'da Ubuntu runner'da Python 3.12 kurup `pytest -v` çalıştırıyor. Faz 5.3'te testlerin bilinçli olarak sunucu gerektirmeyecek şekilde tasarlanmış olması burada karşılığını buluyor -- `@pytest.mark.integration` testleri `require_live_server` fixture'ı sayesinde runner'da Foundry Local bulunamadığı için otomatik atlanacak, geri kalan 21 test sorunsuz çalışmalı. `origin/main`'e push edildi (kullanıcı onayıyla), workflow tetiklendi ve GitHub API üzerinden takip edildi: **`status: completed, conclusion: success`** -- gerçek bir yeşil tik alındı ([run #1](https://github.com/osmanfurkanerkan/foundry-local-rag-assistant/actions)).
 
 ---
 
@@ -476,7 +476,7 @@ Kullanıcıya Cevap (+ kaynak gösterimi)
 - [x] Faz 6.1 — FastAPI Backend
 - [x] Faz 6.2 — Web Arayüzü
 - [x] Faz 6.3 — Docker (yazıldı, build/run bu ortamda test edilemedi -- Docker kurulu değil)
-- [x] Faz 6.4 — GitHub Actions CI (yazıldı, push ile doğrulama bekliyor)
+- [x] Faz 6.4 — GitHub Actions CI (push edildi, gerçek yeşil tik doğrulandı)
 - [ ] Faz 7.1 — README ve Mimari Diyagram
 - [ ] Faz 7.2 — Kod Temizliği
 - [ ] Faz 7.3 — Demo Provası
