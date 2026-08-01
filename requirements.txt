@@ -28,3 +28,7 @@ langchain-openai
 
 # Faz 5.3: regresyon testleri
 pytest
+
+# Faz 6.1: RAG pipeline'ini HTTP API'sine donusturme
+fastapi
+uvicorn[standard]

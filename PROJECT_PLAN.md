@@ -343,6 +343,7 @@ Kullanıcıya Cevap (+ kaynak gösterimi)
   - Basit hata yönetimi
 - **Teknoloji:** FastAPI
 - **Çıktı:** `uvicorn` ile ayağa kalkan, Postman/curl ile test edilebilir bir API
+- **Not:** `api.py`, `main.py`'daki `build_pipeline()`'ı yeniden kullanıyor (kod tekrarı yok) -- pipeline sunucu her istekte değil, `lifespan` context manager ile sadece bir kez ayağa kalkarken kuruluyor. `POST /ask`, `{question, history}` alıp `{answer, sources}` döndürüyor; `history` Faz 3.1'in çoklu-tur mantığını HTTP'nin durumsuz (stateless) doğasına uyacak şekilde her istekte istemciden geri gönderiliyor. Hata yönetimi: boş `question` → 400, pipeline'da beklenmeyen bir hata (örn. Foundry Local kapalıysa) → 503. Gerçek sunucuyla curl testleri: alakalı soru → cevap + doğru `sources`; boş soru → `400 {"detail": "question bos olamaz"}`; alakasız soru → `sources: []` ile "bulamadım"; geçmişli takip sorusu ("its architecture") → CLI'daki ile birebir aynı şekilde doğru çözümlendi.
 
 ### Faz 6.2 — Web Arayüzü
 
@@ -469,7 +470,7 @@ Kullanıcıya Cevap (+ kaynak gösterimi)
 - [x] Faz 5.1 — Test Soru Seti
 - [x] Faz 5.2 — RAGAS Metrikleri (custom LLM-judge'a pivot edildi)
 - [x] Faz 5.3 — Regresyon Testleri
-- [ ] Faz 6.1 — FastAPI Backend
+- [x] Faz 6.1 — FastAPI Backend
 - [ ] Faz 6.2 — Web Arayüzü
 - [ ] Faz 6.3 — Docker
 - [ ] Faz 6.4 — GitHub Actions CI
