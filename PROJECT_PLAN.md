@@ -388,6 +388,7 @@ Kullanıcıya Cevap (+ kaynak gösterimi)
   - Proje amacı, mimari diyagram, kurulum adımları, kullanım örnekleri
 - **Teknoloji:** Markdown
 - **Çıktı:** Yayına hazır `README.md`
+- **Not:** README tamamen yeniden yazıldı -- eski hali sadece Faz 1.6 (MVP) durumunu yansıtıyordu, Faz 2-6'nın (hybrid search, reranking, semantic chunking, multi-turn, streaming, LangChain/LangGraph, corrective RAG, değerlendirme, API, web arayüzü, Docker, CI) tamamı eksikti. Yeni README: öne çıkan özellikler listesi, güncellenmiş mimari diyagram (CLI + web arayüzü + API + corrective RAG akışını gösteriyor), üç farklı kullanım şekli (CLI/API/web), test ve değerlendirme komutları, Docker (test edilemedi notuyla), ve kısa bir "Proje Hikayesi" bölümü (en çarpıcı 3 bulguyu özetleyip detay için PROJECT_PLAN.md'ye yönlendiriyor) içeriyor. CI badge'i de eklendi (Faz 6.4'te doğrulanan gerçek workflow'a işaret ediyor).
 
 ### Faz 7.2 — Kod Temizliği
 
@@ -477,7 +478,7 @@ Kullanıcıya Cevap (+ kaynak gösterimi)
 - [x] Faz 6.2 — Web Arayüzü
 - [x] Faz 6.3 — Docker (yazıldı, build/run bu ortamda test edilemedi -- Docker kurulu değil)
 - [x] Faz 6.4 — GitHub Actions CI (push edildi, gerçek yeşil tik doğrulandı)
-- [ ] Faz 7.1 — README ve Mimari Diyagram
+- [x] Faz 7.1 — README ve Mimari Diyagram
 - [ ] Faz 7.2 — Kod Temizliği
 - [ ] Faz 7.3 — Demo Provası
 - [ ] Faz 8.x — Portfolyo Entegrasyonu (ayrı proje, ileride)
