@@ -7,142 +7,385 @@
 <style>
   :root {
     color-scheme: light dark;
-    --bg: #f5f5f7;
+    --bg: #f2f3f7;
+    --bg-grad-1: #eef1ff;
+    --bg-grad-2: #f7eefc;
     --panel: #ffffff;
-    --text: #1d1d1f;
-    --muted: #6e6e73;
-    --border: #e1e1e6;
-    --accent: #2563eb;
-    --user-bubble: #2563eb;
+    --sidebar-bg: #131320;
+    --sidebar-text: #e7e7f4;
+    --sidebar-muted: #8f8fb3;
+    --sidebar-border: #232338;
+    --sidebar-chip: #1d1d30;
+    --text: #16161a;
+    --muted: #6b6b76;
+    --border: #e3e3ec;
+    --accent: #6366f1;
+    --accent-2: #8b5cf6;
     --user-bubble-text: #ffffff;
-    --assistant-bubble: #eef0f4;
+    --assistant-bubble: #ffffff;
+    --assistant-border: #e7e7f2;
+    --chip-bg: #ffffff;
+    --shadow: 0 1px 2px rgba(20, 20, 40, 0.04), 0 8px 24px rgba(20, 20, 40, 0.06);
   }
   @media (prefers-color-scheme: dark) {
     :root {
-      --bg: #121214;
-      --panel: #1c1c1f;
-      --text: #f2f2f4;
-      --muted: #9a9aa2;
-      --border: #2c2c31;
-      --assistant-bubble: #2a2a30;
+      --bg: #0b0b0f;
+      --bg-grad-1: #14121f;
+      --bg-grad-2: #10151f;
+      --panel: #16161d;
+      --text: #f2f2f6;
+      --muted: #93939f;
+      --border: #26262f;
+      --assistant-bubble: #1c1c25;
+      --assistant-border: #2a2a35;
+      --chip-bg: #1c1c25;
+      --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.35);
     }
   }
   * { box-sizing: border-box; }
   body {
     margin: 0;
     font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
-    background: var(--bg);
     color: var(--text);
     display: flex;
-    justify-content: center;
     min-height: 100vh;
+    background:
+      radial-gradient(1200px 600px at 15% -10%, var(--bg-grad-1), transparent),
+      radial-gradient(1000px 600px at 110% 10%, var(--bg-grad-2), transparent),
+      var(--bg);
   }
+
+  /* ---- Sidebar ---- */
+  .sidebar {
+    width: 280px;
+    flex-shrink: 0;
+    background: var(--sidebar-bg);
+    color: var(--sidebar-text);
+    display: flex;
+    flex-direction: column;
+    padding: 1.25rem 1.1rem;
+    gap: 1.25rem;
+  }
+  .brand { display: flex; align-items: center; gap: 0.65rem; }
+  .brand .logo {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.15rem;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    box-shadow: 0 4px 14px rgba(99, 102, 241, 0.4);
+    flex-shrink: 0;
+  }
+  .brand strong { display: block; font-size: 0.95rem; letter-spacing: -0.01em; }
+  .brand span { display: block; font-size: 0.72rem; color: var(--sidebar-muted); margin-top: 1px; }
+
+  .new-chat-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    padding: 0.65rem 0.9rem;
+    border-radius: 10px;
+    border: 1px solid var(--sidebar-border);
+    background: var(--sidebar-chip);
+    color: var(--sidebar-text);
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: border-color 0.15s ease, transform 0.15s ease;
+  }
+  .new-chat-btn:hover { border-color: var(--accent); transform: translateY(-1px); }
+
+  .sidebar-section { display: flex; flex-direction: column; gap: 0.5rem; }
+  .sidebar-section h3 {
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--sidebar-muted);
+    margin: 0;
+    font-weight: 600;
+  }
+  .sidebar-section p { font-size: 0.8rem; line-height: 1.5; color: var(--sidebar-muted); margin: 0; }
+  .source-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .source-tag {
+    font-size: 0.7rem;
+    padding: 0.28rem 0.6rem;
+    border-radius: 999px;
+    background: var(--sidebar-chip);
+    border: 1px solid var(--sidebar-border);
+    color: var(--sidebar-text);
+  }
+
+  .sidebar-footer {
+    margin-top: auto;
+    padding-top: 0.9rem;
+    border-top: 1px solid var(--sidebar-border);
+    font-size: 0.72rem;
+    color: var(--sidebar-muted);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .sidebar-footer .dot {
+    width: 7px; height: 7px; border-radius: 50%; background: #22c55e;
+    box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.22); flex-shrink: 0;
+  }
+
+  @media (max-width: 760px) {
+    .sidebar { display: none; }
+  }
+
+  /* ---- Main pane ---- */
+  .main { flex: 1; display: flex; justify-content: center; min-width: 0; }
   .app {
     width: 100%;
-    max-width: 720px;
+    max-width: 760px;
     display: flex;
     flex-direction: column;
     height: 100vh;
   }
   header {
-    padding: 1rem 1.25rem;
-    border-bottom: 1px solid var(--border);
+    padding: 1.25rem 1.5rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
   }
-  header h1 { font-size: 1.05rem; margin: 0; }
-  header p { margin: 0.15rem 0 0; font-size: 0.85rem; color: var(--muted); }
+  header h1 { font-size: 1.02rem; margin: 0; letter-spacing: -0.01em; }
+  header p { margin: 0.1rem 0 0; font-size: 0.8rem; color: var(--muted); }
+
   #chat {
     flex: 1;
     overflow-y: auto;
-    padding: 1.25rem;
+    padding: 0.5rem 1.5rem 1rem;
     display: flex;
     flex-direction: column;
-    gap: 0.9rem;
+    gap: 1.1rem;
   }
-  .msg { display: flex; flex-direction: column; max-width: 82%; }
-  .msg.user { align-self: flex-end; align-items: flex-end; }
-  .msg.assistant { align-self: flex-start; align-items: flex-start; }
-  .bubble {
-    padding: 0.65rem 0.9rem;
-    border-radius: 14px;
-    line-height: 1.45;
-    white-space: pre-wrap;
-    font-size: 0.95rem;
+  .empty-state { margin: auto; text-align: center; max-width: 440px; padding: 2rem 1rem; }
+  .empty-state .logo {
+    width: 52px; height: 52px; font-size: 1.6rem; margin: 0 auto 1rem; border-radius: 15px;
+    display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    box-shadow: 0 4px 14px rgba(99, 102, 241, 0.35);
   }
-  .msg.user .bubble { background: var(--user-bubble); color: var(--user-bubble-text); border-bottom-right-radius: 4px; }
-  .msg.assistant .bubble { background: var(--assistant-bubble); color: var(--text); border-bottom-left-radius: 4px; }
-  .sources { margin-top: 0.3rem; font-size: 0.75rem; color: var(--muted); }
-  .error .bubble { background: #fde2e1; color: #7a1f1a; }
-  form {
-    display: flex;
-    gap: 0.6rem;
-    padding: 1rem 1.25rem;
-    border-top: 1px solid var(--border);
-    background: var(--panel);
+  .empty-state h2 { font-size: 1.1rem; margin: 0 0 0.4rem; }
+  .empty-state p { color: var(--muted); font-size: 0.88rem; margin: 0 0 1.25rem; line-height: 1.5; }
+  .chips { display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; }
+  .chip {
+    padding: 0.5rem 0.9rem; border-radius: 999px; border: 1px solid var(--border);
+    background: var(--chip-bg); color: var(--text); font-size: 0.82rem; cursor: pointer;
+    box-shadow: var(--shadow); transition: transform 0.15s ease, border-color 0.15s ease;
   }
+  .chip:hover { transform: translateY(-1px); border-color: var(--accent); }
+
+  .row { display: flex; gap: 0.6rem; max-width: 88%; animation: rise 0.25s ease both; }
+  .row.user { align-self: flex-end; flex-direction: row-reverse; }
+  .row.assistant { align-self: flex-start; }
+  @keyframes rise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+  .avatar {
+    width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center;
+    justify-content: center; font-size: 0.95rem; flex-shrink: 0;
+  }
+  .row.user .avatar { background: linear-gradient(135deg, var(--accent), var(--accent-2)); }
+  .row.assistant .avatar { background: var(--assistant-bubble); border: 1px solid var(--assistant-border); }
+  .msg-body { display: flex; flex-direction: column; min-width: 0; }
+  .row.user .msg-body { align-items: flex-end; }
+  .bubble { padding: 0.7rem 1rem; border-radius: 16px; line-height: 1.5; white-space: pre-wrap; font-size: 0.94rem; }
+  .row.user .bubble {
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    color: var(--user-bubble-text); border-bottom-right-radius: 6px;
+    box-shadow: 0 4px 14px rgba(99, 102, 241, 0.25);
+  }
+  .row.assistant .bubble {
+    background: var(--assistant-bubble); border: 1px solid var(--assistant-border);
+    color: var(--text); border-bottom-left-radius: 6px; box-shadow: var(--shadow);
+  }
+  .sources { margin-top: 0.45rem; display: flex; flex-wrap: wrap; gap: 0.35rem; }
+  .source-pill {
+    font-size: 0.7rem; padding: 0.22rem 0.55rem; border-radius: 999px;
+    background: var(--chip-bg); border: 1px solid var(--border); color: var(--muted);
+  }
+  .row.error .bubble { background: #fde2e1; color: #7a1f1a; border-color: #f5b8b5; }
+
+  .typing-row { align-self: flex-start; display: none; }
+  .typing-row.active { display: flex; }
+  .typing-dots { display: inline-flex; gap: 4px; padding: 0.85rem 1rem; }
+  .typing-dots span { width: 6px; height: 6px; border-radius: 50%; background: var(--muted); animation: bounce 1.2s infinite ease-in-out; }
+  .typing-dots span:nth-child(2) { animation-delay: 0.15s; }
+  .typing-dots span:nth-child(3) { animation-delay: 0.3s; }
+  @keyframes bounce { 0%, 60%, 100% { transform: translateY(0); opacity: 0.5; } 30% { transform: translateY(-4px); opacity: 1; } }
+
+  form { display: flex; gap: 0.6rem; padding: 1rem 1.5rem 1.4rem; }
   input {
-    flex: 1;
-    padding: 0.7rem 0.9rem;
-    border-radius: 10px;
-    border: 1px solid var(--border);
-    background: var(--bg);
-    color: var(--text);
-    font-size: 0.95rem;
+    flex: 1; padding: 0.8rem 1.05rem; border-radius: 14px; border: 1px solid var(--border);
+    background: var(--panel); color: var(--text); font-size: 0.95rem; box-shadow: var(--shadow);
   }
   input:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
   button {
-    padding: 0.7rem 1.1rem;
-    border-radius: 10px;
-    border: none;
-    background: var(--accent);
-    color: white;
-    font-size: 0.95rem;
-    cursor: pointer;
+    padding: 0.8rem 1.3rem; border-radius: 14px; border: none;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    color: white; font-size: 0.95rem; font-weight: 500; cursor: pointer;
+    box-shadow: 0 4px 14px rgba(99, 102, 241, 0.3); transition: transform 0.15s ease;
   }
+  button:hover:not(:disabled) { transform: translateY(-1px); }
   button:disabled { opacity: 0.5; cursor: not-allowed; }
-  .typing { color: var(--muted); font-size: 0.85rem; padding: 0 1.25rem 0.5rem; min-height: 1.2em; }
 </style>
 </head>
 <body>
-  <div class="app">
-    <header>
-      <h1>Local RAG Assistant</h1>
-      <p>Foundry Local dokumanlari uzerinde calisan yerel RAG asistani</p>
-    </header>
-    <div id="chat"></div>
-    <div class="typing" id="typing"></div>
-    <form id="form">
-      <input id="question" type="text" placeholder="Bir soru yaz..." autocomplete="off" />
-      <button id="send" type="submit">Gonder</button>
-    </form>
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="logo">🧠</div>
+      <div>
+        <strong>Local RAG Assistant</strong>
+        <span>Foundry Local üzerinde çalışıyor</span>
+      </div>
+    </div>
+
+    <button type="button" class="new-chat-btn" id="newChatBtn">＋ Yeni Sohbet</button>
+
+    <div class="sidebar-section">
+      <h3>Hakkında</h3>
+      <p>Retrieval-Augmented Generation (RAG) mimarisiyle çalışan, tamamen yerel bir asistan. Cevaplarını yalnızca aşağıdaki bilgi tabanından üretir ve her cevapta kaynağını gösterir.</p>
+    </div>
+
+    <div class="sidebar-section">
+      <h3>Bilgi Tabanı</h3>
+      <div class="source-tags">
+        <span class="source-tag">Foundry Local</span>
+        <span class="source-tag">RAG</span>
+        <span class="source-tag">Embeddings</span>
+        <span class="source-tag">Vector Search</span>
+      </div>
+    </div>
+
+    <div class="sidebar-footer">
+      <span class="dot"></span>
+      100% yerel &amp; offline — veri cihazından çıkmaz
+    </div>
+  </aside>
+
+  <div class="main">
+    <div class="app">
+      <header>
+        <h1>Sohbet</h1>
+      </header>
+
+      <div id="chat">
+        <div class="empty-state" id="emptyState">
+          <div class="logo">🧠</div>
+          <h2>Bir soru sorarak başla</h2>
+          <p>Foundry Local, RAG ve embedding konularındaki resmi dokümantasyon üzerinde çalışıyorum. Kaynak gösteririm, bilmiyorsam söylerim.</p>
+          <div class="chips">
+            <button type="button" class="chip" data-q="What is Foundry Local?">What is Foundry Local?</button>
+            <button type="button" class="chip" data-q="How does Retrieval-Augmented Generation work?">RAG nasıl çalışır?</button>
+            <button type="button" class="chip" data-q="What is an embedding?">Embedding nedir?</button>
+          </div>
+        </div>
+        <div class="row assistant typing-row" id="typingRow">
+          <div class="avatar">🧠</div>
+          <div class="typing-dots"><span></span><span></span><span></span></div>
+        </div>
+      </div>
+
+      <form id="form">
+        <input id="question" type="text" placeholder="Bir soru yaz..." autocomplete="off" />
+        <button id="send" type="submit">Gönder</button>
+      </form>
+    </div>
   </div>
 
 <script>
   const chatEl = document.getElementById("chat");
+  const emptyStateEl = document.getElementById("emptyState");
+  const typingRowEl = document.getElementById("typingRow");
   const formEl = document.getElementById("form");
   const inputEl = document.getElementById("question");
   const sendBtn = document.getElementById("send");
-  const typingEl = document.getElementById("typing");
+  const newChatBtn = document.getElementById("newChatBtn");
 
   // Faz 3.1'in coklu-tur mantigi: HTTP durumsuz oldugu icin gecmisi
-  // istemci tarafinda tutup her istekte API'ye geri gonderiyoruz.
-  const history = [];
+  // istemci tarafinda tutup her istekte API'ye geri gonderiyoruz. Sunucu
+  // tarafinda da (api.py) HISTORY_LIMIT ile ayni sekilde sinirlaniyor --
+  // buyuyen gecmis kucuk GPU'larda CUDA out-of-memory'ye yol acabiliyor.
+  let history = [];
+
+  function resetChat() {
+    history = [];
+    document.querySelectorAll(".row").forEach((row) => {
+      if (row.id !== "typingRow") row.remove();
+    });
+    if (!document.getElementById("emptyState")) {
+      chatEl.insertBefore(buildEmptyState(), typingRowEl);
+    }
+    inputEl.focus();
+  }
+
+  function buildEmptyState() {
+    const tpl = document.createElement("template");
+    tpl.innerHTML = `
+      <div class="empty-state" id="emptyState">
+        <div class="logo">🧠</div>
+        <h2>Bir soru sorarak başla</h2>
+        <p>Foundry Local, RAG ve embedding konularındaki resmi dokümantasyon üzerinde çalışıyorum. Kaynak gösteririm, bilmiyorsam söylerim.</p>
+        <div class="chips">
+          <button type="button" class="chip" data-q="What is Foundry Local?">What is Foundry Local?</button>
+          <button type="button" class="chip" data-q="How does Retrieval-Augmented Generation work?">RAG nasıl çalışır?</button>
+          <button type="button" class="chip" data-q="What is an embedding?">Embedding nedir?</button>
+        </div>
+      </div>`;
+    const node = tpl.content.firstElementChild;
+    node.querySelectorAll(".chip").forEach(bindChip);
+    return node;
+  }
+
+  function bindChip(chip) {
+    chip.addEventListener("click", () => {
+      inputEl.value = chip.dataset.q;
+      formEl.requestSubmit();
+    });
+  }
+
+  document.querySelectorAll(".chip").forEach(bindChip);
+  newChatBtn.addEventListener("click", resetChat);
 
   function addMessage(role, text, sources) {
-    const wrapper = document.createElement("div");
-    wrapper.className = `msg ${role}`;
+    const empty = document.getElementById("emptyState");
+    if (empty) empty.remove();
+
+    const row = document.createElement("div");
+    row.className = `row ${role}`;
+
+    const avatar = document.createElement("div");
+    avatar.className = "avatar";
+    avatar.textContent = role === "user" ? "🙂" : "🧠";
+    row.appendChild(avatar);
+
+    const body = document.createElement("div");
+    body.className = "msg-body";
+
     const bubble = document.createElement("div");
     bubble.className = "bubble";
     bubble.textContent = text;
-    wrapper.appendChild(bubble);
+    body.appendChild(bubble);
+
     if (sources && sources.length) {
       const src = document.createElement("div");
       src.className = "sources";
-      src.textContent = `Kaynak: ${sources.join(", ")}`;
-      wrapper.appendChild(src);
+      sources.forEach((s) => {
+        const pill = document.createElement("span");
+        pill.className = "source-pill";
+        pill.textContent = s;
+        src.appendChild(pill);
+      });
+      body.appendChild(src);
     }
-    chatEl.appendChild(wrapper);
+
+    row.appendChild(body);
+    chatEl.insertBefore(row, typingRowEl);
     chatEl.scrollTop = chatEl.scrollHeight;
-    return wrapper;
+    return row;
   }
 
   formEl.addEventListener("submit", async (event) => {
@@ -154,7 +397,8 @@
     inputEl.value = "";
     inputEl.disabled = true;
     sendBtn.disabled = true;
-    typingEl.textContent = "Yaziyor...";
+    typingRowEl.classList.add("active");
+    chatEl.scrollTop = chatEl.scrollHeight;
 
     try {
       const response = await fetch("/ask", {
@@ -172,10 +416,9 @@
       addMessage("assistant", data.answer, data.sources);
       history.push({ question, answer: data.answer });
     } catch (err) {
-      const wrapper = addMessage("assistant", `Hata: ${err.message}`);
-      wrapper.classList.add("error");
+      addMessage("error", `Hata: ${err.message}`);
     } finally {
-      typingEl.textContent = "";
+      typingRowEl.classList.remove("active");
       inputEl.disabled = false;
       sendBtn.disabled = false;
       inputEl.focus();

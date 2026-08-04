@@ -40,7 +40,10 @@ def build_pipeline() -> RagPipeline:
 
 # Faz 3.1: kac onceki turun modele gosterilecegi -- sinirsiz buyursen prompt
 # gereksiz sisirilir, gecmis konuyla alakasi azalan eski turlar de gurultu katar.
-HISTORY_LIMIT = 5
+# Faz sonrasi (demo hazirligi): kucuk/sinirli VRAM'li GPU'larda buyuyen
+# gecmisin CUDA out-of-memory'ye yol actigi gozlemlendi (bkz. PROJECT_PLAN.md)
+# -- deger 5'ten 3'e dusuruldu, ama bu tam bir cozum degil, sadece riski azaltir.
+HISTORY_LIMIT = 3
 
 if __name__ == "__main__":
     pipeline = build_pipeline()
